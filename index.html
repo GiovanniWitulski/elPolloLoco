@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" translate="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="font-grandstander.css">
+    <script src="/js/models/sound-manager.class.js"></script>
+    <script src="/js/models/drawable-object.class.js"></script>
+    <script src="/js/models/movable-object.class.js"></script>
+    <script src="/js/models/character.class.js"></script>
+    <script src="/js/models/chicken.class.js"></script>
+    <script src="/js/models/small-chicken.class.js"></script>
+    <script src="/js/models/endboss.class.js"></script>
+    <script src="/js/models/cloud.class.js"></script>
+    <script src="/js/models/status-bar-health.class.js"></script>
+    <script src="/js/models/status-bar-coin.class.js"></script>
+    <script src="/js/models/status-bar-bottle.class.js"></script>
+    <script src="/js/models/coin.class.js"></script>
+    <script src="/js/models/bottle.class.js"></script>
+    <script src="/js/models/world.class.js"></script>
+    <script src="/js/models/background-object.class.js"></script>
+    <script src="/js/models/keyboard.class.js"></script>
+    <script src="/js/models/level.class.js"></script>
+    <script src="/js/models/throwable-object.class.js"></script>
+    <script src="/levels/level1.js"></script>
+    <script defer src="/js/game.js"></script>
+</head>
+<body onload="checkScreenSize()">
+<div class="content-size">
+    <div class="img-div">
+        <img class="img" src="img/5_background/first_half_background.png" alt="background img">
+      </div>
+      <div id="startScreenContainer">
+        <div class="start-screen-container">
+            <div id="settingsBtnContainer">
+                <div id="changeSettingsContainer">
+
+                </div>
+                <button id="settingsBtn" onclick="settingsMenu()">
+                    <img id="settingsBtnImg" src="img/icons/setting.png" alt="settings">
+                </button>
+            </div>
+            <div id="startBtnContainer">
+                <button id="startBtn" onclick="startGame()">
+                    <img id="startBtnImg" class="start-btn-img" src="img/icons/play.svg" alt="start button">
+                </button>
+            </div>
+            <div id="keybindsBtnContainer">
+                <div class="d-none" id="keybindsExplanationContainer">
+                    <div id="keybindsImgContainer">
+                        <img class="keybind-icon" src="img/icons/key-arrow-left.png" alt="left arrow">
+                        <img class="keybind-icon" src="img/icons/key-arrow-right.png" alt="right arrow">
+                        <img class="keybind-icon-spacebar" src="img/icons/key-spacebar.png" alt="spacebar">
+                        <img class="keybind-icon" src="img/icons/d-key.png" alt="d key">
+                    </div>
+                    <ul class="description-text-list">
+                        <li class="keybind-description"><b class="mr20">=</b>Move Left</li>
+                        <li class="keybind-description"><b class="mr20">=</b>Move Right</li>
+                        <li class="keybind-description"><b class="mr20">=</b>Jump</li>
+                        <li class="keybind-description"><b class="mr20">=</b>Throw Bottle</li>
+                    </ul>
+                </div>
+                <button id="keybindsBtn" onclick="keybindsMenu()">
+                    <img id="keybindsBtnImg" src="img/icons/gamepad.svg" alt="">
+                </button>
+            </div>
+        </div>
+      </div>
+      <div id="endScreenContainer" class="d-none">
+            <div class="end-screeen-container">
+                <button id="restartBtn" onclick="startGame()">
+                    <img class="restart-btn-img" src="img/icons/rotate-left.svg" alt="">
+                </button>
+                <button id="homeBtn" onclick="hideEndScreen(); displayStartScreen()">
+                    <img class="home-btn-img" src="img/icons/house.svg" alt="">
+                </button>
+            </div>
+      </div>
+      <!-- <img class="img" src="img/9_intro_outro_screens/start/startscreen_1.png" alt=""> -->
+    <div id="canvasBgrContainer">
+        <img id="gameOverImg" class="d-none" src="img/9_intro_outro_screens/game_over/game over!.png" alt="">
+        <img id="winImg" class="d-none" src="img/9_intro_outro_screens/win/win_1.png" alt="">
+        <span id="portraitMessage" class="d-none">
+            turn ur device
+        </span>
+        <div class="canvas-container">
+            <canvas class="d-none" id="canvas" width="720px" height="480px">
+            </canvas>
+            <button onclick="fullscreen()" class="screen-btn" id="fullscreenBtn">
+                <img id="fullscreenIcon" src="img/icons/expand.svg" alt="" width="100px" height="100px">
+            </button>
+            <div id="mobileControlContainer" class="">
+                <div class="btns-container-left">
+                    <button id="moveLeftBtn" class="mobile-control-btn">
+                        <img class="mobile-control-btn-img" src="img/icons/left-arrow.png" alt="">
+                    </button>
+                    <button id="moveRightBtn" class="mobile-control-btn">
+                        <img class="mobile-control-btn-img" src="img/icons/right-arrow.png" alt="">
+                    </button>
+                </div>
+                <div class="btns-container-right"> 
+                    <button id="mobileThrowBtn" class="mobile-control-btn"> 
+                        <img class="mobile-control-btn-img" src="img/icons/chili-sauce.png" alt=""> 
+                    </button> 
+                    <button id="mobileJumpBtn" class="mobile-control-btn"> 
+                        <img class="mobile-control-btn-img" src="img/icons/up-arrow.png" alt=""> 
+                    </button> 
+                </div> 
+            </div>
+        </div>
+    </div>
+    
+    <div class="d-none"> <!-- LINKS ZUM EINBETTEN -->
+        <div> Icons made by <a href="https://www.flaticon.com/authors/phoenix-group" title="Phoenix Group"> Phoenix Group </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
+        <div> Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
+    </div>
+</div>
+</body>
+</html>
