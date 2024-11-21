@@ -160,6 +160,8 @@ function clearCanvas() {
 function interval(fn, time) {
     let id = setInterval(fn, time);
     intervalIds.push(id)
+    return id;
+    
 }
 
 function stopGame() {

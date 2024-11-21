@@ -77,18 +77,17 @@ class World {
     }
 
     playThrowSound() { 
+        this.soundManager.stop('throw_sound');
         this.soundManager.play('throw_sound', 0.1);
     }
 
-///////////////////////////////////////////////////////////////////////////////
     checkCollisons() {
         this.checkThrowedObjectCollisions();
         this.checkBottleCollisons();
         this.checkCoinCollisons();
         this.checkEnemyCollisons();
-        // this.checkAtackRangeCollisons();
     }
-///////////////////////////////////////////////////////////////////////////////
+
     checkThrowedObjectCollisions() {
         this.level.enemies.forEach((enemy) => { 
           this.throwedObject.forEach((throwObj, throwObjIndex) => {
@@ -123,6 +122,7 @@ class World {
     checkCoinCollisons() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
+                this.soundManager.stop('coin_sound');
                 this.soundManager.play('coin_sound', 0.1);
                 this.level.coins.splice(index, 1);
                 this.statusBarCoin.setPercentage(this.statusBarCoin.percentage + 20);
@@ -133,6 +133,7 @@ class World {
     checkBottleCollisons() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
+                this.soundManager.stop('bottle_sound');
                 this.soundManager.play('bottle_sound', 0.1);
                 this.level.bottles.splice(index, 1);
                 this.statusBarBottle.setPercentage(this.statusBarBottle.percentage + 20);

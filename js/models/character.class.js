@@ -94,7 +94,7 @@ class Character extends MovableObject{
     }
 
     animate() {
-        interval(() => {
+        this.movementIntervalId = interval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
@@ -115,7 +115,7 @@ class Character extends MovableObject{
             this.world.camera_x = -this.x + 100;
         }, 1000 / 60);
 
-        interval(() => {
+        this.animationIntervalId = interval(() => {
             if (this.positionUnchangedX() && this.positionUnchangedY() && !this.isDead() && !this.isHurt()) {
                 this.handleStanding();
             } else if (this.isDead()) {
@@ -138,12 +138,13 @@ class Character extends MovableObject{
         this.stationaryFrameCount++;
         if (this.isStandingStill()) {
             this.playAnimation(this.IMAGES_SLEEPING);
-          this.world.soundManager.play('sleep_sound', 0.1);
+            this.world.soundManager.play('sleep_sound', 0.1);
         }
         this.wasAboveGround = false;
     }
 
     handleDeath() {
+        clearInterval(this.movementIntervalId);
         this.playAnimation(this.IMAGES_DEAD);
         this.world.soundManager.play('dead_sound', 0.1);
         this.stationaryFrameCount = 0;
@@ -151,7 +152,6 @@ class Character extends MovableObject{
         if (!this.animationEnded) {
             setTimeout(() => {
                 this.world.soundManager.play('game_over_sound', 0.2);
-                clearInterval(this.interval);
                 stopGame();
                 selectEndScreen('zeroHp');
             }, 3000);
@@ -167,6 +167,9 @@ class Character extends MovableObject{
     }
 
     handleIsAboveGround() {
+        if (this.world.soundManager.sleep_sound.currentTime > 0) {
+            this.world.soundManager.stop('sleep_sound');
+        }
         if (this.world.keyboard.SPACE && !this.wasAboveGround) {
             this.currentImage = 0;
             this.playAnimation(this.IMAGES_JUMPING);
@@ -179,6 +182,9 @@ class Character extends MovableObject{
     }
 
     handleWalking() {
+        if (this.world.soundManager.sleep_sound.currentTime > 0) {
+            this.world.soundManager.stop('sleep_sound');
+        }
         this.playAnimation(this.IMAGES_WALKING);
         this.stationaryFrameCount = 0;
         this.wasAboveGround = false;

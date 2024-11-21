@@ -11,9 +11,9 @@ class SoundManager {
     snore_sound = new Audio('audio/snore_sound.mp3');
     small_chicken_sound = new Audio('audio/small_chicken.mp3');
     boss_chicken_sound = new Audio('audio/boss_chicken.mp3');
-    sleep_sound = new Audio('audio/sleep.mp3'); //hinzufügen
-    coin_sound = new Audio('audio/coin.mp3');   //hinzufügen
-    bottle_sound = new Audio('audio/bottle.mp3');  //hinzufügen
+    sleep_sound = new Audio('audio/sleep.mp3'); 
+    coin_sound = new Audio('audio/coin.mp3');   
+    bottle_sound = new Audio('audio/bottle.mp3');
 
     // js.doc
     // Landing Page
@@ -63,6 +63,7 @@ class SoundManager {
             sound.pause();
             sound.currentTime = 0;
             console.log('gestoppt');
+            console.log(sound);
             
         } else {
             console.error(`Sound "${soundName}" nicht gefunden.`);

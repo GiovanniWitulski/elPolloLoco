@@ -120,9 +120,6 @@ class Endboss extends MovableObject {
         this.fallDown();
         this.world.soundManager.stop('boss_chicken_sound');
         if (!this.animationEnded) {
-            clearInterval(this.animationIntervalId);
-            clearInterval(this.walkIntervalId);
-            clearInterval(this.attackIntervalId);
             setTimeout(() => {
                 this.world.soundManager.play('win_sound', 0.2);
                 stopGame();
