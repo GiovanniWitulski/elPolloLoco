@@ -17,6 +17,7 @@ class SoundManager {
 
     // js.doc
     // Landing Page
+    // stopSound
     
     getAllAudioObjects() {
         return [
@@ -68,6 +69,12 @@ class SoundManager {
         } else {
             console.error(`Sound "${soundName}" nicht gefunden.`);
         }
+    }
+
+    stopAll() {
+        this.getAllAudioObjects().forEach(sound => {
+            this.stop(sound); 
+        });
     }
 
     muteAll(mute) {

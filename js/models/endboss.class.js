@@ -87,7 +87,10 @@ class Endboss extends MovableObject {
 
         this.animationIntervalId = interval(() => {
             i++;
-            this.world.soundManager.play('boss_chicken_sound', 0.02)
+            // this.world.soundManager.play('boss_chicken_sound', 0.02)
+            if (!this.isDead() && !this.world.character.isDead()) {
+                this.world.soundManager.play('boss_chicken_sound', 0.02)
+            }
             if (this.isDead()) {
                 this.handleDeath();
             } else if (i < 10) {
@@ -116,11 +119,11 @@ class Endboss extends MovableObject {
     }
 
     handleDeath() {
-        this.playAnimation(this.IMAGES_DEAD)
+        this.playAnimation(this.IMAGES_DEAD);
         this.fallDown();
-        this.world.soundManager.stop('boss_chicken_sound');
         if (!this.animationEnded) {
             setTimeout(() => {
+                // this.world.soundManager.stopAll();
                 this.world.soundManager.play('win_sound', 0.2);
                 stopGame();
                 selectEndScreen('endbossDead');

@@ -39,7 +39,9 @@ class SmallChicken extends MovableObject {
     animate() {
         interval( () => {
             this.moveLeft();
-            this.world.soundManager.play('small_chicken_sound', 0.02);
+            if (!this.isDead()) {
+                this.world.soundManager.play('small_chicken_sound', 0.02)
+            }
             if (this.isDead()) {
                 this.speed = 0;
                 this.world.soundManager.pause('small_chicken_sound');

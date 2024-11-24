@@ -26,8 +26,9 @@
     <script src="/js/models/throwable-object.class.js"></script>
     <script src="/levels/level1.js"></script>
     <script defer src="/js/game.js"></script>
+    <script defer src="js/screenManagement.js"></script>
 </head>
-<body onload="checkScreenSize()">
+<body onload="init(); checkScreenSize()">
 <div class="content-size">
     <div class="img-div">
         <img class="img" src="img/5_background/first_half_background.png" alt="background img">
@@ -73,7 +74,9 @@
                 <button id="restartBtn" onclick="startGame()">
                     <img class="restart-btn-img" src="img/icons/rotate-left.svg" alt="">
                 </button>
-                <button id="homeBtn" onclick="hideEndScreen(); displayStartScreen()">
+                <button id="homeBtn" onclick="
+                    toggleElement('endScreenContainer', false);
+                    toggleElement('startScreenContainer', true);">
                     <img class="home-btn-img" src="img/icons/house.svg" alt="">
                 </button>
             </div>

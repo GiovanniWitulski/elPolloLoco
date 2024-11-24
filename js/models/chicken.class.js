@@ -41,18 +41,18 @@ class Chicken extends MovableObject {
     animate() {
         interval( () => {
             this.moveLeft();
-            this.world.soundManager.play('chicken_sound', 0.02);
-            if (this.isDead()) {
-                this.speed = 0;
-                this.world.soundManager.pause('chicken_sound');
+            if (!this.isDead() || this.x < 0) {
+                this.world.soundManager.play('chicken_sound', 0.02)
             }
-            if (this.x < 0) {
-                this.world.soundManager.pause('chicken_sound');
-            }
+
+            // if (this.x < 0) {
+            //     this.world.soundManager.pause('chicken_sound');
+            // }
         }, 1000 / 60);
         
         interval(() => {
             if (this.isDead()) {
+                this.speed = 0;
                 this.playAnimation(this.IMAGES_DEAD)
                 this.fallDown();
             } else {

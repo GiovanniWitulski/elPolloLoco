@@ -226,9 +226,8 @@ body {
     height: 60px;
 }
 
-.bigger {
+.openKeybinds {
     background-color: rgb(248,199,105) !important;
-    display: flex !important;
     justify-content: flex-end !important;
     width: 600px !important;
     height: 350px !important;
@@ -236,9 +235,8 @@ body {
     z-index: 2 !important;
 }
 
-.biggerSettings {
+.openSettings {
     background-color: rgb(199,103,88) !important;
-    display: flex !important;
     justify-content: flex-start !important;
     width: 600px !important;
     height: 350px !important;
@@ -401,55 +399,18 @@ body {
     height: 100%;
 }
 
-/* @media (max-width: 770px) {
-    #canvas {
-     
-      width: 720px; 
-      height: 480px;
-      max-width: 100vw;
-      max-height: 101vh;
-    }
-} */
-
-/* CSS für den Landscape-Modus */
-/* @media (min-width: 770px) and (orientation: landscape) { 
-    .canvas-container {
-      display: block;
-    }
-  
-    #canvas {
-      height: 100vh;
-      width: 100vw;
-    }
-  
-    #fullscreenIcon {
-      display: none;
-    }
-  
-    .compress-screen-icon {
-      display: none;
-    }
-  
-    #portraitMessage {
-      display: none; 
-    }
-} */
-
 @media (max-width: 770px) , (max-height: 500px) and (orientation: landscape) { 
     #canvas.canvas-fullscreen {
         width: 100vw; 
         height: 100vh; 
-        object-fit: contain; /*  Canvas soll in den verfügbaren Bereich passen */
+        object-fit: contain;
     }
 
     #canvas {
-        /* Voreingestellte Breite und Höhe für Desktop */
-        width: 720px; /* Beispielwert */
-        height: 480px; /* Beispielwert */
+        width: 720px;
+        height: 480px;
         max-width: 100vw;
         max-height: 101vh;
-        /* margin-top: -10px; */
-        border-top: none;
         border-top: none;
     }
 
@@ -462,7 +423,6 @@ body {
       }
 }
 
-  /* CSS für den Portrait-Modus */
 @media (max-width: 770px) and (orientation: portrait) {
   .canvas-container {
     display: none; 
