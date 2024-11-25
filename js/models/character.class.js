@@ -144,6 +144,8 @@ class Character extends MovableObject{
     }
 
     handleDeath() {
+        debugger;
+        hideMobileBtns();
         clearInterval(this.movementIntervalId);
         this.playAnimation(this.IMAGES_DEAD);
         this.world.soundManager.play('dead_sound', 0.1);

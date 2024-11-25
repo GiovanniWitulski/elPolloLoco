@@ -39,7 +39,7 @@ class DrawableObject {
             } 
             ctx.rect(this.x + this.offset.right, this.y + this.offset.top, this.width - (this.offset.right + this.offset.left),
                 this.height - (this.offset.top + this.offset.bottom));
-            ctx.stroke();   
+            ctx.stroke(); 
         }
     }
 
@@ -47,7 +47,8 @@ class DrawableObject {
         if (this instanceof Endboss) {
             ctx.beginPath(ctx);
             ctx.lineWidth = '2.5';
-            hitboxesVisible ? ctx.strokeStyle = 'pink' : ctx.strokeStyle = 'red';
+            // hitboxesVisible ? ctx.strokeStyle = 'pink' : ctx.strokeStyle = 'red';
+            ctx.strokeStyle = hitboxesVisible ? 'pink' : 'transparent';
             ctx.rect(this.x - 150 + this.offset.right, this.y + this.offset.top, this.width + 300 - (this.offset.right + this.offset.left),
                     this.height - (this.offset.top + this.offset.bottom));
             ctx.stroke();

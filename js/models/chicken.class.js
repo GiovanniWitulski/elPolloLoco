@@ -39,21 +39,20 @@ class Chicken extends MovableObject {
     }
 
     animate() {
-        interval( () => {
+        this.movementIntervalId = interval( () => {
             this.moveLeft();
-            if (!this.isDead() || this.x < 0) {
-                this.world.soundManager.play('chicken_sound', 0.02)
+            
+            if ((!this.isDead() || this.x < 0) && !gameEnd) {
+                this.world.soundManager.play('chicken_sound', 0.02);
+            } else if (gameEnd) {
+                this.world.soundManager.stop('chicken_sound');
             }
-
-            // if (this.x < 0) {
-            //     this.world.soundManager.pause('chicken_sound');
-            // }
         }, 1000 / 60);
         
-        interval(() => {
+        this.animationIntervalId = interval(() => {
             if (this.isDead()) {
                 this.speed = 0;
-                this.playAnimation(this.IMAGES_DEAD)
+                this.playAnimation(this.IMAGES_DEAD);
                 this.fallDown();
             } else {
                 this.playAnimation(this.IMAGES_WALKING);

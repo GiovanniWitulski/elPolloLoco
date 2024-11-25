@@ -1,5 +1,5 @@
 class MovableObject extends DrawableObject {
-    speed = 0.15
+    speed = 0.15;
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
@@ -44,7 +44,7 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
-        this.energy -= 5;
+        this.energy -= 20;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -55,7 +55,7 @@ class MovableObject extends DrawableObject {
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit;
         timePassed = timePassed / 1000; 
-        return timePassed < 0.5;
+        return timePassed < 0.75;
     }
 
     isDead() {

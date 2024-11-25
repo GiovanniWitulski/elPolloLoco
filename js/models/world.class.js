@@ -12,6 +12,8 @@ class World {
     throwableObjects = [];
     throwedObject = [];
     soundManager = new SoundManager();
+    lastThrowTime = 0;
+    lastHitTime = 0;
 
     setWorldForObjects(world, objects) {
         objects.forEach(object => {
@@ -67,12 +69,17 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.D && this.throwableObjects.length > 0) {
-            this.playThrowSound();
-            let throwBottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            throwBottle.setWorld(this);
-            this.throwedObject.push(throwBottle)
-            this.throwableObjects.pop();
-            this.statusBarBottle.setPercentage(this.statusBarBottle.percentage - 20);
+            let now = Date.now(); 
+
+            if (now - this.lastThrowTime >= 1200) { 
+                this.playThrowSound();
+                let throwBottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+                throwBottle.setWorld(this);
+                this.throwedObject.push(throwBottle)
+                this.throwableObjects.pop();
+                this.statusBarBottle.setPercentage(this.statusBarBottle.percentage - 20);
+                this.lastThrowTime = now;
+            }
         }
     }
 
@@ -112,7 +119,7 @@ class World {
             if (this.character.isCollidingTop(enemy) && this.character.isAboveGround()) {
                 this.character.jump();
                 enemy.hit();
-            } else if (this.character.isColliding(enemy)) {
+            } else if (this.character.isColliding(enemy) && !this.character.isAboveGround() && !this.character.isHurt()) {
                 this.character.hit();
                 this.statusBarHealth.setPercentage(this.character.energy);
             }

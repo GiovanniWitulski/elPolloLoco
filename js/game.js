@@ -3,9 +3,8 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 let gameEnd;
-let stopSound;
 let isInFullscreen;
-let hitboxesVisible = false;
+let hitboxesVisible = true;
 let muteBtn = false;
 
 function init() {
@@ -14,7 +13,6 @@ function init() {
 
 function startGame() {
         gameEnd = false;
-        stopSound = false;
         isInFullscreen = false;
         toggleElement('portraitMessage', false);
         toggleElement('fullscreenIcon', true);
@@ -43,15 +41,12 @@ function stopGame() {
 }
 
 function selectEndScreen(gameEndThrough) {
+    gameEnd = true;
     document.getElementById('fullscreenIcon').classList.add('d-none');
+    closeFullscreen();
     if (gameEndThrough === 'endbossDead') {
-        gameEnd = true;
-        closeFullscreen();
         displayWinScreen();
-    }
-    if (gameEndThrough === 'zeroHp') {
-        gameEnd = true;
-        closeFullscreen();
+    } else if (gameEndThrough === 'zeroHp') {
         displayGameOverScreen();
     }
 }

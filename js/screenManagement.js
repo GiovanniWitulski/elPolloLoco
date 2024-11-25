@@ -23,7 +23,6 @@ function displayPortraitMode(portraitMessage, startBtnContainer, keybindsBtn, se
     startBtnContainer.style.opacity = '0.5';
     keybindsBtn.style.opacity = '0.5';
     settingsBtnContainer.style.opacity = '0.5';
-
 }
 
 function displayLandscapeMode(portraitMessage, startBtnContainer, keybindsBtn, settingsBtnContainer) {
@@ -150,4 +149,8 @@ function toggleMenu(containerId, btnId, contentId, openClass, activeStyles, inac
       Object.assign(btn.style, inactiveStyles);
       content.classList.add('d-none');
     }
+}
+
+function hideMobileBtns() {
+    toggleElement('mobileControlContainer', false);
 }

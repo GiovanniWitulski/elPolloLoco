@@ -37,22 +37,18 @@ class SmallChicken extends MovableObject {
     }
 
     animate() {
-        interval( () => {
+        this.movementIntervalId = interval( () => {
             this.moveLeft();
-            if (!this.isDead()) {
+            if ((!this.isDead() || this.x < 0) && !gameEnd) {
                 this.world.soundManager.play('small_chicken_sound', 0.02)
-            }
-            if (this.isDead()) {
-                this.speed = 0;
-                this.world.soundManager.pause('small_chicken_sound');
-            }
-            if (this.x < 0) {
-                this.world.soundManager.pause('small_chicken_sound');
+            } else if (gameEnd) {
+                this.world.soundManager.stop('small_chicken_sound');
             }
         }, 1000 / 60);
         
-        interval(() => {
+        this.animationIntervalId = interval(() => {
             if (this.isDead()) {
+                this.speed = 0;
                 this.playAnimation(this.IMAGES_DEAD)
                 this.fallDown();
             } else {

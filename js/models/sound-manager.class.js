@@ -17,7 +17,6 @@ class SoundManager {
 
     // js.doc
     // Landing Page
-    // stopSound
     
     getAllAudioObjects() {
         return [

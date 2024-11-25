@@ -116,7 +116,7 @@ body {
 
 #keybindsBtn:hover {
     cursor: pointer;
-    filter: drop-shadow(0px 0px 0px transparent); 
+    filter: drop-shadow(0px 0px 0px transparent) !important; 
 }
 
 #keybindsBtn:hover #keybindsBtnImg {
@@ -143,7 +143,7 @@ body {
 
 #settingsBtn:hover {
     cursor: pointer;
-    filter: drop-shadow(0px 0px 0px transparent); 
+    filter: drop-shadow(0px 0px 0px transparent) !important; 
 }
 
 #settingsBtn:hover #settingsBtnImg {
@@ -160,7 +160,6 @@ body {
     border-radius: 50%;
     transition: all 175ms ease-in-out !important;
 }
-/* ////////////////////////////////////////////////////////////////////// */
 
 #keybindsBtnContainer {
     display: flex;
@@ -243,7 +242,7 @@ body {
     border-radius: 40px !important;
     z-index: 2 !important;
 }
-/* ////////////////////////////////////////////////////////////////////// */
+
 .restart-btn-img {
     width: 48px;
     height: 48px;
@@ -415,7 +414,7 @@ body {
     }
 
     #mobileControlContainer {
-        display: flex !important;
+        display: flex;
     }
 
     .screen-btn {
