@@ -65,7 +65,6 @@ body {
     width: 100vw;
     max-width: 1920px;
     overflow: hidden;
-    object-fit: none;
 }
 
 .start-btn-img {
@@ -177,12 +176,14 @@ body {
     flex-direction: column;
     gap: 20px;
     align-items: flex-start;
-    margin-left: 20px;
+    margin-left: 32px;
     transition: all 175ms ease-in-out
 }
 
 #keybindsExplanationContainer {
     display: flex;
+    width: 100%;
+    justify-content: space-between;
 }
 
 #keybindsDescriptionContainer {
@@ -200,9 +201,16 @@ body {
     gap: 20px;
     margin: 0;
     padding: 0;
-    margin-left: 20px;
-    margin-right: 45px;
-    transition: all 175ms ease-in-out
+    /* margin-left: 20px;
+    margin-right: 45px; */
+    transition: all 175ms ease-in-out;
+    width: 100%;
+    align-items: flex-end;
+}
+
+.keybind-description-desktop {
+    font-size: 34px;
+    width: 30%;
 }
 
 .keybind-description {
@@ -212,7 +220,9 @@ body {
     align-items: center;
     font-size: 28px;
     gap: 20px;
-    transition: all 175ms ease-in-out
+    transition: all 175ms ease-in-out;
+    width: calc(100% - 20px);
+
 }
 
 .keybind-icon {
@@ -220,16 +230,11 @@ body {
     height: 60px;
 }
 
-.keybind-icon-spacebar {
-    width: 240px;
-    height: 60px;
-}
-
 .openKeybinds {
     background-color: rgb(248,199,105) !important;
     justify-content: flex-end !important;
     width: 600px !important;
-    height: 350px !important;
+    height: 400px !important;
     border-radius: 40px !important;
     z-index: 2 !important;
 }
@@ -238,7 +243,7 @@ body {
     background-color: rgb(199,103,88) !important;
     justify-content: flex-start !important;
     width: 600px !important;
-    height: 350px !important;
+    height: 400px !important;
     border-radius: 40px !important;
     z-index: 2 !important;
 }
@@ -414,7 +419,7 @@ body {
     }
 
     #mobileControlContainer {
-        display: flex;
+        display: flex !important;
     }
 
     .screen-btn {
@@ -454,13 +459,11 @@ body {
 
 #mobileControlContainer {
     display: none;
-    /* border: 2px solid grey; */
     height: 75px;
     width: 100%;
     position: absolute;
     bottom: 0; 
     left: 0; 
-    /* z-index: 2; */
     justify-content: space-between;
     align-items: center;
 }
@@ -471,7 +474,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* border: 1px solid black; */
     border-radius: 50%;
     background-color: transparent;
     border: none;
@@ -484,6 +486,14 @@ body {
     width: 100px;
     justify-content: space-between;
     padding-right: 40px;
+}
+
+.mobile-mute-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    justify-content: center;
 }
 
 .btns-container-left {
@@ -499,4 +509,14 @@ body {
     width: 35px;
     height: 35px;
     filter: drop-shadow(0px 0px 5px black);
+}
+
+#mobileMuteImg {
+    width: 40px;
+    height: 40px;
+}
+
+#mobileThrowImg {
+    width: 40px;
+    height: 40px;
 }

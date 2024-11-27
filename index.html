@@ -31,15 +31,21 @@
 <body onload="init(); checkScreenSize()">
 <div class="content-size">
     <div class="img-div">
-        <img class="img" src="img/5_background/first_half_background.png" alt="background img">
+        <img class="img" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="background img">
       </div>
-      <div id="startScreenContainer">
+      <section id="startScreenContainer">
         <div class="start-screen-container">
             <div id="settingsBtnContainer">
                 <div id="changeSettingsContainer">
-
+                    <li><span>Hitboxes</span><button><img src="img/icons/off.png" alt="on/off button"></button></li>
+                    <li><span>Volume</span><button><img src="img/icons/off.png" alt="on/off button"></button></li>
+                    <li><span></span><button><img src="img/icons/off.png" alt="on/off button"></button></li>
+                    <li><span></span><button><img src="img/icons/off.png" alt="on/off button"></button></li>
+                    <li><span></span><button><img src="img/icons/off.png" alt="on/off button"></button></li>
+                    <li><span></span><button><img src="img/icons/off.png" alt="on/off button"></button></li>
+                    <li><span></span><button><img src="img/icons/off.png" alt="on/off button"></button></li>
                 </div>
-                <button id="settingsBtn" onclick="settingsMenu()">
+                <button id="settingsBtn" onclick="settingsMenu(); toggleStartScreenBtns('startBtnContainer', 'keybindsBtnContainer');">
                     <img id="settingsBtnImg" src="img/icons/setting.png" alt="settings">
                 </button>
             </div>
@@ -51,25 +57,27 @@
             <div id="keybindsBtnContainer">
                 <div class="d-none" id="keybindsExplanationContainer">
                     <div id="keybindsImgContainer">
-                        <img class="keybind-icon" src="img/icons/key-arrow-left.png" alt="left arrow">
-                        <img class="keybind-icon" src="img/icons/key-arrow-right.png" alt="right arrow">
-                        <img class="keybind-icon-spacebar" src="img/icons/key-spacebar.png" alt="spacebar">
-                        <img class="keybind-icon" src="img/icons/d-key.png" alt="d key">
+                        <img class="keybind-icon" src="img/icons/left-arrow.png" alt="left arrow">
+                        <img class="keybind-icon" src="img/icons/right-arrow.png" alt="right arrow">
+                        <img class="keybind-icon" src="img/icons/up-arrow.png" alt="up arrow">
+                        <img class="keybind-icon" src="img/icons/chili-sauce.png" alt="d key">
+                        <img class="keybind-icon" src="img/icons/volume.png" alt="M key">
                     </div>
                     <ul class="description-text-list">
-                        <li class="keybind-description"><b class="mr20">=</b>Move Left</li>
-                        <li class="keybind-description"><b class="mr20">=</b>Move Right</li>
-                        <li class="keybind-description"><b class="mr20">=</b>Jump</li>
-                        <li class="keybind-description"><b class="mr20">=</b>Throw Bottle</li>
+                        <li class="keybind-description"><b class="keybind-description-desktop"></b><b class="mr20">=</b>Move Left</li>
+                        <li class="keybind-description"><b class="keybind-description-desktop"></b><b class="mr20">=</b>Move Right</li>
+                        <li class="keybind-description"><b class="keybind-description-desktop">/SPACE</b><b class="mr20">=</b>Jump</li>
+                        <li class="keybind-description"><b class="keybind-description-desktop">/D</b><b class="mr20">=</b>Throw Bottle</li>
+                        <li class="keybind-description"><b class="keybind-description-desktop">/M</b><b class="mr20">=</b>Mute Sound</li>
                     </ul>
                 </div>
-                <button id="keybindsBtn" onclick="keybindsMenu()">
+                <button id="keybindsBtn" onclick="keybindsMenu(); toggleStartScreenBtns('startBtnContainer', 'settingsBtnContainer')">
                     <img id="keybindsBtnImg" src="img/icons/gamepad.svg" alt="">
                 </button>
             </div>
         </div>
-      </div>
-      <div id="endScreenContainer" class="d-none">
+      </section>
+      <section id="endScreenContainer" class="d-none">
             <div class="end-screeen-container">
                 <button id="restartBtn" onclick="startGame()">
                     <img class="restart-btn-img" src="img/icons/rotate-left.svg" alt="">
@@ -80,9 +88,9 @@
                     <img class="home-btn-img" src="img/icons/house.svg" alt="">
                 </button>
             </div>
-      </div>
+      </section>
       <!-- <img class="img" src="img/9_intro_outro_screens/start/startscreen_1.png" alt=""> -->
-    <div id="canvasBgrContainer">
+    <section id="canvasBgrContainer">
         <img id="gameOverImg" class="d-none" src="img/9_intro_outro_screens/game_over/game over!.png" alt="">
         <img id="winImg" class="d-none" src="img/9_intro_outro_screens/win/win_1.png" alt="">
         <span id="portraitMessage" class="d-none">
@@ -94,7 +102,7 @@
             <button onclick="fullscreen()" class="screen-btn" id="fullscreenBtn">
                 <img id="fullscreenIcon" src="img/icons/expand.svg" alt="" width="100px" height="100px">
             </button>
-            <div id="mobileControlContainer" class="">
+            <div id="mobileControlContainer">
                 <div class="btns-container-left">
                     <button id="moveLeftBtn" class="mobile-control-btn">
                         <img class="mobile-control-btn-img" src="img/icons/left-arrow.png" alt="">
@@ -103,9 +111,14 @@
                         <img class="mobile-control-btn-img" src="img/icons/right-arrow.png" alt="">
                     </button>
                 </div>
+                <div calss="mobile-mute-container">
+                    <button id="mobileMuteBtn" class="mobile-control-btn">
+                        <img id="mobileMuteImg" class="mobile-control-btn-img" src="img/icons/volume.png" alt="">
+                    </button>
+                </div>
                 <div class="btns-container-right"> 
                     <button id="mobileThrowBtn" class="mobile-control-btn"> 
-                        <img class="mobile-control-btn-img" src="img/icons/chili-sauce.png" alt=""> 
+                        <img id="mobileThrowImg" class="mobile-control-btn-img" src="img/icons/chili-sauce.png" alt=""> 
                     </button> 
                     <button id="mobileJumpBtn" class="mobile-control-btn"> 
                         <img class="mobile-control-btn-img" src="img/icons/up-arrow.png" alt=""> 
@@ -113,12 +126,37 @@
                 </div> 
             </div>
         </div>
-    </div>
+    </section>
     
     <div class="d-none"> <!-- LINKS ZUM EINBETTEN -->
+        <div> Icons made by <a href="https://www.flaticon.com/authors/wahyu-adam" title="Wahyu Adam"> Wahyu Adam </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
         <div> Icons made by <a href="https://www.flaticon.com/authors/phoenix-group" title="Phoenix Group"> Phoenix Group </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
         <div> Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
+        <div> Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons"> Those Icons </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
     </div>
 </div>
 </body>
 </html>
+
+<!--     stopAll() {
+        this.getAllAudioObjects().forEach(sound => {
+            this.stop(sound); 
+        });
+    }
+
+    muteAll(mute) {
+        this.getAllAudioObjects().forEach(sound => {
+            sound.muted = mute; 
+        });
+    }
+
+    setVolumeForAll(volume) {
+        if (volume >= 0 && volume <= 1) { 
+            this.getAllAudioObjects().forEach(sound => {
+                sound.volume = volume;
+            });
+        } else {
+            console.error('Die Lautstärke muss zwischen 0 und 1 liegen.');
+        }
+    }
+ -->

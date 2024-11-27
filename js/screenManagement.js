@@ -1,3 +1,5 @@
+let startScreenBtns = true;
+
 function checkScreenSize() {
     let portraitMessage = document.getElementById('portraitMessage');
     let startBtnContainer = document.getElementById('startBtnContainer');
@@ -82,27 +84,6 @@ function closeFullscreen() {
         isInFullscreen = false;
     }
 }
-  
-function displayWinScreen() {
-    toggleElement('winImg', true);
-    clearCanvas();
-    toggleElement('canvas', false);
-    setTimeout(() => {
-        toggleElement('winImg', false);
-        toggleElement('endScreenContainer', true);
-        clearCanvas();
-    }, 3000);
-}
-
-function displayGameOverScreen() {
-    toggleElement('gameOverImg', true);
-    toggleElement('canvas', false);
-    setTimeout(() => {
-        toggleElement('gameOverImg', false);
-        toggleElement('endScreenContainer', true);
-        clearCanvas();
-    }, 3000);
-}
 
 function toggleElement(elementId, show) {
     let element = document.getElementById(elementId);
@@ -125,14 +106,14 @@ function keybindsMenu() {
 }
 
 function settingsMenu() {
-  toggleMenu(
-    'settingsBtnContainer', 
-    'settingsBtn', 
-    'changeSettingsContainer', 
-    'openSettings',
-    {backgroundColor: 'transparent', filter: 'none', borderColor: 'transparent'}, 
-    {backgroundColor: 'rgb(199,103,88)', filter: 'drop-shadow(0px 0px 3px black)', borderColor: 'white'}
-  );
+    toggleMenu(
+      'settingsBtnContainer', 
+      'settingsBtn', 
+      'changeSettingsContainer', 
+      'openSettings',
+      {backgroundColor: 'transparent', filter: 'none', borderColor: 'transparent'}, 
+      {backgroundColor: 'rgb(199,103,88)', filter: 'drop-shadow(0px 0px 3px black)', borderColor: 'white'}
+    );
 }
 
 function toggleMenu(containerId, btnId, contentId, openClass, activeStyles, inactiveStyles) {
@@ -152,5 +133,25 @@ function toggleMenu(containerId, btnId, contentId, openClass, activeStyles, inac
 }
 
 function hideMobileBtns() {
-    toggleElement('mobileControlContainer', false);
+    let elements = document.querySelectorAll('.mobile-control-btn-img');
+  
+    elements.forEach(element => {
+      element.style.display = 'none';
+    });
+}
+
+function toggleMuteImg() {
+    let mobileMuteImg = document.getElementById('mobileMuteImg');
+    if (world.isMuted) {
+      mobileMuteImg.src = 'img/icons/mute.png';
+    } else {
+      mobileMuteImg.src = 'img/icons/volume.png';
+    }
+}
+
+function toggleStartScreenBtns(containerId1, containerId2) {
+  startScreenBtns = !startScreenBtns;
+  [containerId1, containerId2].forEach(containerId => {
+    toggleElement(containerId, startScreenBtns);
+  });
 }

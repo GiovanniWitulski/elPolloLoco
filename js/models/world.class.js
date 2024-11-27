@@ -48,7 +48,7 @@ class World {
         this.allAudioObjects = this.soundManager.getAllAudioObjects();
 
         document.addEventListener('keydown', (event) => {
-            if (event.key === 'm' || event.key === 'M' || muteBtn) {
+            if (event.key === 'm' || event.key === 'M') {
                 this.toggleMute(); 
             }
         });

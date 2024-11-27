@@ -4,11 +4,15 @@ let world;
 let keyboard = new Keyboard();
 let gameEnd;
 let isInFullscreen;
-let hitboxesVisible = true;
-let muteBtn = false;
+let hitboxes = true;
 
 function init() {
     canvas = document.getElementById('canvas');
+    let mobileMuteBtn = document.getElementById('mobileMuteBtn');
+    mobileMuteBtn.addEventListener('touchstart', () => {
+        world.toggleMute();
+        toggleMuteImg();
+    });
 }
 
 function startGame() {
@@ -49,6 +53,27 @@ function selectEndScreen(gameEndThrough) {
     } else if (gameEndThrough === 'zeroHp') {
         displayGameOverScreen();
     }
+}
+
+function displayWinScreen() {
+    toggleElement('winImg', true);
+    clearCanvas();
+    toggleElement('canvas', false);
+    setTimeout(() => {
+        toggleElement('winImg', false);
+        toggleElement('endScreenContainer', true);
+        clearCanvas();
+    }, 3000);
+}
+
+function displayGameOverScreen() {
+    toggleElement('gameOverImg', true);
+    toggleElement('canvas', false);
+    setTimeout(() => {
+        toggleElement('gameOverImg', false);
+        toggleElement('endScreenContainer', true);
+        clearCanvas();
+    }, 3000);
 }
 
 document.addEventListener('keydown', (e) => {

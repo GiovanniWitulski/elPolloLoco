@@ -1,13 +1,13 @@
     let level1;
     function initLevel() {
         level1 = new Level([
-            // new Endboss(world),
-            // new SmallChicken(world),
-            // new SmallChicken(world),
-            // new SmallChicken(world),
-            // new Chicken(world),
-            // new Chicken(world),
-            // new Chicken(world)
+            new Endboss(world),
+            new SmallChicken(world),
+            new SmallChicken(world),
+            new SmallChicken(world),
+            new Chicken(world),
+            new Chicken(world),
+            new Chicken(world)
         ],
         [
             new Cloud(),

@@ -17,6 +17,12 @@ class SoundManager {
 
     // js.doc
     // Landing Page
+
+    constructor() {
+        this.getAllAudioObjects().forEach(sound => {
+          sound.preload = 'none';
+        });
+    }
     
     getAllAudioObjects() {
         return [
@@ -62,33 +68,14 @@ class SoundManager {
         if (sound) {
             sound.pause();
             sound.currentTime = 0;
-            console.log('gestoppt');
-            console.log(sound);
-            
         } else {
             console.error(`Sound "${soundName}" nicht gefunden.`);
         }
     }
 
-    stopAll() {
-        this.getAllAudioObjects().forEach(sound => {
-            this.stop(sound); 
-        });
-    }
-
     muteAll(mute) {
         this.getAllAudioObjects().forEach(sound => {
-            sound.muted = mute; 
+            sound.muted = mute;
         });
-    }
-
-    setVolumeForAll(volume) {
-        if (volume >= 0 && volume <= 1) { 
-            this.getAllAudioObjects().forEach(sound => {
-                sound.volume = volume;
-            });
-        } else {
-            console.error('Die Lautstärke muss zwischen 0 und 1 liegen.');
-        }
     }
 }
