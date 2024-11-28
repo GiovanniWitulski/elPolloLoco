@@ -15,9 +15,6 @@ class SoundManager {
     coin_sound = new Audio('audio/coin.mp3');   
     bottle_sound = new Audio('audio/bottle.mp3');
 
-    // js.doc
-    // Landing Page
-
     constructor() {
         this.getAllAudioObjects().forEach(sound => {
           sound.preload = 'none';
@@ -47,8 +44,10 @@ class SoundManager {
     play(soundName, volume = 1) {
         let sound = this[soundName]; 
         if (sound) {
-            sound.volume = volume;
-            sound.play();
+            sound.volume = Math.min(1, volume + (overallVolume / 10));
+            if (overallVolume > 0) {
+                sound.play();   
+            }
         } else {
             console.error(`Sound "${soundName}" nicht gefunden.`);
         }

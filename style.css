@@ -9,7 +9,7 @@ body {
     width: 100%;
     height: 100vh;
     background-color: #4d4d4d;
-
+    font-family: 'Grandstander';
 }
 
 .content-size {
@@ -57,7 +57,7 @@ body {
     max-height: 1080px;
 }
 
-.img {
+.bg-img { 
     height: 100vh;
     max-height: 1080px;
     position: absolute;
@@ -95,157 +95,8 @@ body {
     }    
 }
 
-#keybindsBtnImg {
-    width: 48px;
-    height: 48px;
-    transition: all 175ms ease-in-out;
-}
-
-#keybindsBtn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 8px;
-    background-color: rgb(248,199,105);
-    border: 2px solid white;
-    border-radius: 50%;
-    filter: drop-shadow(0px 0px 3px black);
-    transition: all 175ms ease-in-out; 
-}
-
-#keybindsBtn:hover {
-    cursor: pointer;
-    filter: drop-shadow(0px 0px 0px transparent) !important; 
-}
-
-#keybindsBtn:hover #keybindsBtnImg {
-    filter: drop-shadow(0px 0px 3px black);     
-}
-
-#settingsBtnImg {
-    width: 48px;
-    height: 48px;
-    transition: all 175ms ease-in-out;
-}
-
-#settingsBtn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 8px;
-    background-color: rgb(199,103,88);
-    border: 2px solid white;
-    border-radius: 50%;
-    filter: drop-shadow(0px 0px 3px black);
-    transition: all 175ms ease-in-out; 
-}
-
-#settingsBtn:hover {
-    cursor: pointer;
-    filter: drop-shadow(0px 0px 0px transparent) !important; 
-}
-
-#settingsBtn:hover #settingsBtnImg {
-    filter: drop-shadow(0px 0px 3px black);     
-}
-
-#settingsBtnContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 48px;
-    height: 48px;
-    background-color: transparent;
-    border-radius: 50%;
-    transition: all 175ms ease-in-out !important;
-}
-
-#keybindsBtnContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 48px;
-    height: 48px;
-    background-color: transparent;
-    border-radius: 50%;
-    transition: all 175ms ease-in-out !important;
-}
-
-#keybindsImgContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: flex-start;
-    margin-left: 32px;
-    transition: all 175ms ease-in-out
-}
-
-#keybindsExplanationContainer {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-}
-
-#keybindsDescriptionContainer {
-    gap: 20px;
-}
-
 .mr20 {
     margin-right: 20px;
-}
-
-.description-text-list {
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin: 0;
-    padding: 0;
-    /* margin-left: 20px;
-    margin-right: 45px; */
-    transition: all 175ms ease-in-out;
-    width: 100%;
-    align-items: flex-end;
-}
-
-.keybind-description-desktop {
-    font-size: 34px;
-    width: 30%;
-}
-
-.keybind-description {
-    font-family: 'Grandstander';
-    height: 60px;
-    display: flex;
-    align-items: center;
-    font-size: 28px;
-    gap: 20px;
-    transition: all 175ms ease-in-out;
-    width: calc(100% - 20px);
-
-}
-
-.keybind-icon {
-    width: 60px;
-    height: 60px;
-}
-
-.openKeybinds {
-    background-color: rgb(248,199,105) !important;
-    justify-content: flex-end !important;
-    width: 600px !important;
-    height: 400px !important;
-    border-radius: 40px !important;
-    z-index: 2 !important;
-}
-
-.openSettings {
-    background-color: rgb(199,103,88) !important;
-    justify-content: flex-start !important;
-    width: 600px !important;
-    height: 400px !important;
-    border-radius: 40px !important;
-    z-index: 2 !important;
 }
 
 .restart-btn-img {
@@ -300,19 +151,7 @@ body {
     }    
 }
 
-.start-screen-container {
-    display: flex;
-    position: fixed;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    max-width: 1920px;
-    height: 100%;
-    max-height: 1080px;
-    gap: 40px;
-}
-
-.end-screeen-container {
+.start-end-screeen-container {
     display: flex;
     position: fixed;
     justify-content: center;
@@ -392,131 +231,4 @@ body {
 
 #startBtnContainer {
     transition: all 175ms ease-in-out;
-}
-
-#portraitMessage {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    height: 100%;
-}
-
-@media (max-width: 770px) , (max-height: 500px) and (orientation: landscape) { 
-    #canvas.canvas-fullscreen {
-        width: 100vw; 
-        height: 100vh; 
-        object-fit: contain;
-    }
-
-    #canvas {
-        width: 720px;
-        height: 480px;
-        max-width: 100vw;
-        max-height: 101vh;
-        border-top: none;
-    }
-
-    #mobileControlContainer {
-        display: flex !important;
-    }
-
-    .screen-btn {
-        display: none;
-      }
-}
-
-@media (max-width: 770px) and (orientation: portrait) {
-  .canvas-container {
-    display: none; 
-  }
-
-  #portraitMessage {
-    font-family: 'Grandstander';
-    animation: pulse 2s infinite;
-    display: block;
-    position: fixed;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    font-size: 32px; 
-  }
-
-  @keyframes pulse {
-    0% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-}
-
-#mobileControlContainer {
-    display: none;
-    height: 75px;
-    width: 100%;
-    position: absolute;
-    bottom: 0; 
-    left: 0; 
-    justify-content: space-between;
-    align-items: center;
-}
-
-.mobile-control-btn {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    background-color: transparent;
-    border: none;
-}
-
-.btns-container-right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    justify-content: space-between;
-    padding-right: 40px;
-}
-
-.mobile-mute-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    justify-content: center;
-}
-
-.btns-container-left {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100px;
-    justify-content: space-between;
-    padding-left: 40px;
-}
-
-.mobile-control-btn-img {
-    width: 35px;
-    height: 35px;
-    filter: drop-shadow(0px 0px 5px black);
-}
-
-#mobileMuteImg {
-    width: 40px;
-    height: 40px;
-}
-
-#mobileThrowImg {
-    width: 40px;
-    height: 40px;
 }

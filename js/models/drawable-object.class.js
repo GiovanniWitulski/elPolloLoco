@@ -27,15 +27,15 @@ class DrawableObject {
             ctx.beginPath(ctx);
             ctx.lineWidth = '2.5';
             if (this instanceof Character) {
-                ctx.strokeStyle = hitboxesVisible ? 'green' : 'transparent';
+                ctx.strokeStyle = hitboxes ? 'green' : 'transparent';
             } else if (this instanceof SmallChicken || this instanceof Chicken || this instanceof Endboss) {
-                ctx.strokeStyle = hitboxesVisible ? 'red' : 'transparent';
+                ctx.strokeStyle = hitboxes ? 'red' : 'transparent';
             } else if (this instanceof Coin) {
-                ctx.strokeStyle = hitboxesVisible ? 'blue' : 'transparent';
+                ctx.strokeStyle = hitboxes ? 'blue' : 'transparent';
             } else if (this instanceof ThrowableObject) {
-                ctx.strokeStyle = hitboxesVisible ? 'orange' : 'transparent';
+                ctx.strokeStyle = hitboxes ? 'orange' : 'transparent';
             } else if (this instanceof Bottle) {
-                ctx.strokeStyle = hitboxesVisible ? 'blue' : 'transparent';
+                ctx.strokeStyle = hitboxes ? 'blue' : 'transparent';
             } 
             ctx.rect(this.x + this.offset.right, this.y + this.offset.top, this.width - (this.offset.right + this.offset.left),
                 this.height - (this.offset.top + this.offset.bottom));
@@ -46,9 +46,8 @@ class DrawableObject {
     drawBigFrame(ctx) {
         if (this instanceof Endboss) {
             ctx.beginPath(ctx);
-            ctx.lineWidth = '2.5';
-            // hitboxesVisible ? ctx.strokeStyle = 'pink' : ctx.strokeStyle = 'red';
-            ctx.strokeStyle = hitboxesVisible ? 'pink' : 'transparent';
+            ctx.lineWidth = '2.5';        
+            ctx.strokeStyle = hitboxes ? 'pink' : 'transparent';
             ctx.rect(this.x - 150 + this.offset.right, this.y + this.offset.top, this.width + 300 - (this.offset.right + this.offset.left),
                     this.height - (this.offset.top + this.offset.bottom));
             ctx.stroke();

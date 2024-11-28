@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="media.css">
+    <link rel="stylesheet" href="settings-menu.css">
+    <link rel="stylesheet" href="keybinds-menu.css">
+    <link rel="stylesheet" href="mobile.css">
     <link rel="stylesheet" href="font-grandstander.css">
     <script src="/js/models/sound-manager.class.js"></script>
     <script src="/js/models/drawable-object.class.js"></script>
@@ -31,65 +35,72 @@
 <body onload="init(); checkScreenSize()">
 <div class="content-size">
     <div class="img-div">
-        <img class="img" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="background img">
+        <img id="introBgr" class="bg-img" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="background img">
+        <img id="ingameBgr" class="bg-img d-none" src="img/5_background/first_half_background.png" alt="background img">
+    </div>
+    <section id="startScreenContainer">
+      <div class="start-end-screeen-container">
+          <div id="settingsBtnContainer">
+              <div id="changeSettingsContainer" class="d-none">
+                  <li class="settings-list-item">
+                      <span>Hitboxes</span>
+                      <div class="toggle-hitbox-container">
+                        <button class="toggle-hitbox-btn" onclick="toggleHitboxes()"><img id="switchImg" class="switch-btn-img" src="img/icons/off.png" alt="on/off button"></button>
+                      </div>
+                  </li>
+                  <li class="settings-list-item">
+                      <span>Volume</span>
+                      <div class="change-volume-container">
+                        <button onclick="changeVolume('minus')" class="volume-arrow-btns"><img class="volume-arrow" src="img/icons/left-arrow.png" alt="on/off button"></button>
+                        <b id="volumeCounter"></b><button onclick="changeVolume('plus')" class="volume-arrow-btns"><img class="volume-arrow" src="img/icons/right-arrow.png" alt="on/off button"></button>
+                      </div>
+                  </li>
+              </div>
+              <button id="settingsBtn" onclick="settingsMenu(); toggleStartScreenBtns('startBtnContainer', 'keybindsBtnContainer');">
+                  <img id="settingsBtnImg" src="img/icons/setting.png" alt="settings">
+              </button>
+          </div>
+          <div id="startBtnContainer">
+              <button id="startBtn" onclick="startGame(); toggleElement('introBgr', false); toggleElement('ingameBgr', true)">
+                  <img id="startBtnImg" class="start-btn-img" src="img/icons/play.svg" alt="start button">
+              </button>
+          </div>
+          <div id="keybindsBtnContainer">
+              <div class="d-none" id="keybindsExplanationContainer">
+                  <div id="keybindsImgContainer">
+                      <img class="keybind-icon" src="img/icons/left-arrow.png" alt="left arrow">
+                      <img class="keybind-icon" src="img/icons/right-arrow.png" alt="right arrow">
+                      <img class="keybind-icon" src="img/icons/up-arrow.png" alt="up arrow">
+                      <img class="keybind-icon" src="img/icons/chili-sauce.png" alt="d key">
+                      <img class="keybind-icon" src="img/icons/volume.png" alt="M key">
+                  </div>
+                  <ul class="description-text-list">
+                      <li class="keybind-description"><b class="keybind-description-desktop"></b><b class="mr20">=</b>Move Left</li>
+                      <li class="keybind-description"><b class="keybind-description-desktop"></b><b class="mr20">=</b>Move Right</li>
+                      <li class="keybind-description"><b class="keybind-description-desktop">/SPACE</b><b class="mr20">=</b>Jump</li>
+                      <li class="keybind-description"><b class="keybind-description-desktop">/D</b><b class="mr20">=</b>Throw Bottle</li>
+                      <li class="keybind-description"><b class="keybind-description-desktop">/M</b><b class="mr20">=</b>Mute Sound</li>
+                  </ul>
+              </div>
+              <button id="keybindsBtn" onclick="keybindsMenu(); toggleStartScreenBtns('startBtnContainer', 'settingsBtnContainer')">
+                  <img id="keybindsBtnImg" src="img/icons/gamepad.svg" alt="">
+              </button>
+          </div>
       </div>
-      <section id="startScreenContainer">
-        <div class="start-screen-container">
-            <div id="settingsBtnContainer">
-                <div id="changeSettingsContainer">
-                    <li><span>Hitboxes</span><button><img src="img/icons/off.png" alt="on/off button"></button></li>
-                    <li><span>Volume</span><button><img src="img/icons/off.png" alt="on/off button"></button></li>
-                    <li><span></span><button><img src="img/icons/off.png" alt="on/off button"></button></li>
-                    <li><span></span><button><img src="img/icons/off.png" alt="on/off button"></button></li>
-                    <li><span></span><button><img src="img/icons/off.png" alt="on/off button"></button></li>
-                    <li><span></span><button><img src="img/icons/off.png" alt="on/off button"></button></li>
-                    <li><span></span><button><img src="img/icons/off.png" alt="on/off button"></button></li>
-                </div>
-                <button id="settingsBtn" onclick="settingsMenu(); toggleStartScreenBtns('startBtnContainer', 'keybindsBtnContainer');">
-                    <img id="settingsBtnImg" src="img/icons/setting.png" alt="settings">
-                </button>
-            </div>
-            <div id="startBtnContainer">
-                <button id="startBtn" onclick="startGame()">
-                    <img id="startBtnImg" class="start-btn-img" src="img/icons/play.svg" alt="start button">
-                </button>
-            </div>
-            <div id="keybindsBtnContainer">
-                <div class="d-none" id="keybindsExplanationContainer">
-                    <div id="keybindsImgContainer">
-                        <img class="keybind-icon" src="img/icons/left-arrow.png" alt="left arrow">
-                        <img class="keybind-icon" src="img/icons/right-arrow.png" alt="right arrow">
-                        <img class="keybind-icon" src="img/icons/up-arrow.png" alt="up arrow">
-                        <img class="keybind-icon" src="img/icons/chili-sauce.png" alt="d key">
-                        <img class="keybind-icon" src="img/icons/volume.png" alt="M key">
-                    </div>
-                    <ul class="description-text-list">
-                        <li class="keybind-description"><b class="keybind-description-desktop"></b><b class="mr20">=</b>Move Left</li>
-                        <li class="keybind-description"><b class="keybind-description-desktop"></b><b class="mr20">=</b>Move Right</li>
-                        <li class="keybind-description"><b class="keybind-description-desktop">/SPACE</b><b class="mr20">=</b>Jump</li>
-                        <li class="keybind-description"><b class="keybind-description-desktop">/D</b><b class="mr20">=</b>Throw Bottle</li>
-                        <li class="keybind-description"><b class="keybind-description-desktop">/M</b><b class="mr20">=</b>Mute Sound</li>
-                    </ul>
-                </div>
-                <button id="keybindsBtn" onclick="keybindsMenu(); toggleStartScreenBtns('startBtnContainer', 'settingsBtnContainer')">
-                    <img id="keybindsBtnImg" src="img/icons/gamepad.svg" alt="">
-                </button>
-            </div>
-        </div>
-      </section>
-      <section id="endScreenContainer" class="d-none">
-            <div class="end-screeen-container">
-                <button id="restartBtn" onclick="startGame()">
-                    <img class="restart-btn-img" src="img/icons/rotate-left.svg" alt="">
-                </button>
-                <button id="homeBtn" onclick="
-                    toggleElement('endScreenContainer', false);
-                    toggleElement('startScreenContainer', true);">
-                    <img class="home-btn-img" src="img/icons/house.svg" alt="">
-                </button>
-            </div>
-      </section>
-      <!-- <img class="img" src="img/9_intro_outro_screens/start/startscreen_1.png" alt=""> -->
+    </section>
+    <section id="endScreenContainer" class="d-none">
+          <div class="start-end-screeen-container">
+              <button id="restartBtn" onclick="startGame(); toggleElement('introBgr', false); toggleElement('ingameBgr', true)">
+                  <img class="restart-btn-img" src="img/icons/rotate-left.svg" alt="">
+              </button>
+              <button id="homeBtn" onclick="
+                  toggleElement('endScreenContainer', false);
+                  toggleElement('startScreenContainer', true);">
+                  <img class="home-btn-img" src="img/icons/house.svg" alt="">
+              </button>
+          </div>
+    </section>
+    <!-- <img class="img" src="img/9_intro_outro_screens/start/startscreen_1.png" alt=""> -->
     <section id="canvasBgrContainer">
         <img id="gameOverImg" class="d-none" src="img/9_intro_outro_screens/game_over/game over!.png" alt="">
         <img id="winImg" class="d-none" src="img/9_intro_outro_screens/win/win_1.png" alt="">
@@ -113,12 +124,12 @@
                 </div>
                 <div calss="mobile-mute-container">
                     <button id="mobileMuteBtn" class="mobile-control-btn">
-                        <img id="mobileMuteImg" class="mobile-control-btn-img" src="img/icons/volume.png" alt="">
+                        <img id="mobileMuteImg" class="mobile-throw-and-mute-img mobile-control-btn-img" src="img/icons/volume.png" alt="">
                     </button>
                 </div>
                 <div class="btns-container-right"> 
                     <button id="mobileThrowBtn" class="mobile-control-btn"> 
-                        <img id="mobileThrowImg" class="mobile-control-btn-img" src="img/icons/chili-sauce.png" alt=""> 
+                        <img id="mobileThrowImg" class="mobile-throw-and-mute-img mobile-control-btn-img" src="img/icons/chili-sauce.png" alt=""> 
                     </button> 
                     <button id="mobileJumpBtn" class="mobile-control-btn"> 
                         <img class="mobile-control-btn-img" src="img/icons/up-arrow.png" alt=""> 

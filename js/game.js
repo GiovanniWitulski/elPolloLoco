@@ -4,7 +4,9 @@ let world;
 let keyboard = new Keyboard();
 let gameEnd;
 let isInFullscreen;
-let hitboxes = true;
+let hitboxes = false;
+let startScreenBtns = true;
+let overallVolume;
 
 function init() {
     canvas = document.getElementById('canvas');
@@ -13,6 +15,7 @@ function init() {
         world.toggleMute();
         toggleMuteImg();
     });
+    changeVolume();
 }
 
 function startGame() {
@@ -46,7 +49,7 @@ function stopGame() {
 
 function selectEndScreen(gameEndThrough) {
     gameEnd = true;
-    document.getElementById('fullscreenIcon').classList.add('d-none');
+    toggleElement('fullscreenIcon', false);
     closeFullscreen();
     if (gameEndThrough === 'endbossDead') {
         displayWinScreen();
@@ -62,6 +65,8 @@ function displayWinScreen() {
     setTimeout(() => {
         toggleElement('winImg', false);
         toggleElement('endScreenContainer', true);
+        toggleElement('introBgr', true);
+        toggleElement('ingameBgr', false);
         clearCanvas();
     }, 3000);
 }
@@ -72,8 +77,29 @@ function displayGameOverScreen() {
     setTimeout(() => {
         toggleElement('gameOverImg', false);
         toggleElement('endScreenContainer', true);
+        toggleElement('introBgr', true);
+        toggleElement('ingameBgr', false);
         clearCanvas();
     }, 3000);
+}
+
+function changeVolume(change) {
+    let volumeCounter = document.getElementById('volumeCounter');
+
+    if (change == 'plus') {
+        overallVolume = overallVolume + 1;
+        if (overallVolume > 10) {
+            overallVolume = 10;
+        }
+    } else if (change == 'minus') {
+        overallVolume = overallVolume - 1;
+        if (overallVolume < 0) {
+            overallVolume = 0;
+        }
+    } else {
+        overallVolume = 5;
+    }
+    volumeCounter.innerHTML = overallVolume;
 }
 
 document.addEventListener('keydown', (e) => {

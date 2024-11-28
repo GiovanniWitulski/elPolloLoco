@@ -1,0 +1,52 @@
+@media (max-width: 770px) , (max-height: 500px) and (orientation: landscape) { 
+    #canvas.canvas-fullscreen {
+        width: 100vw; 
+        height: 100vh; 
+        object-fit: contain;
+    }
+
+    #canvas {
+        width: 720px;
+        height: 480px;
+        max-width: 100vw;
+        max-height: 101vh;
+        border-top: none;
+    }
+
+    #mobileControlContainer {
+        display: flex !important;
+    }
+
+    .screen-btn {
+        display: none;
+      }
+}
+
+@media (max-width: 770px) and (orientation: portrait) {
+  .canvas-container {
+    display: none; 
+  }
+
+  #portraitMessage {
+    animation: pulse 2s infinite;
+    display: block;
+    position: fixed;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 32px; 
+  }
+
+  @keyframes pulse {
+    0% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}

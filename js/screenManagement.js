@@ -1,5 +1,3 @@
-let startScreenBtns = true;
-
 function checkScreenSize() {
     let portraitMessage = document.getElementById('portraitMessage');
     let startBtnContainer = document.getElementById('startBtnContainer');
@@ -136,8 +134,14 @@ function hideMobileBtns() {
     let elements = document.querySelectorAll('.mobile-control-btn-img');
   
     elements.forEach(element => {
-      element.style.display = 'none';
+      element.classList.add('d-none');
     });
+
+    setTimeout(() => {
+      elements.forEach(element => {
+        element.classList.remove('d-none');
+      });
+    }, 6000);
 }
 
 function toggleMuteImg() {
@@ -154,4 +158,15 @@ function toggleStartScreenBtns(containerId1, containerId2) {
   [containerId1, containerId2].forEach(containerId => {
     toggleElement(containerId, startScreenBtns);
   });
+}
+
+function toggleHitboxes() {
+  hitboxes = !hitboxes;
+
+  let switchImg = document.getElementById('switchImg');
+  if (hitboxes) {
+      switchImg.src = 'img/icons/on.png';
+  } else {
+      switchImg.src = 'img/icons/off.png';
+  }
 }
