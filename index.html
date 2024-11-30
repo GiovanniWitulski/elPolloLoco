@@ -1,37 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" translate="no">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="media.css">
-    <link rel="stylesheet" href="settings-menu.css">
-    <link rel="stylesheet" href="keybinds-menu.css">
-    <link rel="stylesheet" href="mobile.css">
-    <link rel="stylesheet" href="font-grandstander.css">
-    <script src="/js/models/sound-manager.class.js"></script>
-    <script src="/js/models/drawable-object.class.js"></script>
-    <script src="/js/models/movable-object.class.js"></script>
-    <script src="/js/models/character.class.js"></script>
-    <script src="/js/models/chicken.class.js"></script>
-    <script src="/js/models/small-chicken.class.js"></script>
-    <script src="/js/models/endboss.class.js"></script>
-    <script src="/js/models/cloud.class.js"></script>
-    <script src="/js/models/status-bar-health.class.js"></script>
-    <script src="/js/models/status-bar-coin.class.js"></script>
-    <script src="/js/models/status-bar-bottle.class.js"></script>
-    <script src="/js/models/coin.class.js"></script>
-    <script src="/js/models/bottle.class.js"></script>
-    <script src="/js/models/world.class.js"></script>
-    <script src="/js/models/background-object.class.js"></script>
-    <script src="/js/models/keyboard.class.js"></script>
-    <script src="/js/models/level.class.js"></script>
-    <script src="/js/models/throwable-object.class.js"></script>
-    <script src="/levels/level1.js"></script>
-    <script defer src="/js/game.js"></script>
-    <script defer src="js/screenManagement.js"></script>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>El Pollo Loco</title>
+      
+        <link rel="icon" type="image/x-icon" href="/img/favicons/favicon.ico">
+        <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="/img/favicons/apple-touch-icon.png">
+        <link rel="android-chrome" sizes="192x192" href="/img/favicons/android-chrome-192x192.png">
+        <link rel="android-chrome" sizes="512x512" href="/img/favicons/android-chrome-512x512.png">
+        <link rel="manifest" href="/img/favicons/site.webmanifest">
+      
+        <link rel="stylesheet" href="font-grandstander.css"> 
+        <link rel="stylesheet" href="font-roboto.css"> 
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="media.css"> 
+        <link rel="stylesheet" href="mobile.css"> 
+        <link rel="stylesheet" href="settings-menu.css"> 
+        <link rel="stylesheet" href="keybinds-menu.css"> 
+      
+        <script src="/js/models/sound-manager.class.js"></script>
+        <script src="/js/models/drawable-object.class.js"></script>
+        <script src="/js/models/movable-object.class.js"></script> 
+        <script src="/js/models/character.class.js"></script> 
+        <script src="/js/models/chicken.class.js"></script> 
+        <script src="/js/models/small-chicken.class.js"></script> 
+        <script src="/js/models/endboss.class.js"></script> 
+        <script src="/js/models/cloud.class.js"></script> 
+        <script src="/js/models/status-bar-health.class.js"></script> 
+        <script src="/js/models/status-bar-coin.class.js"></script> 
+        <script src="/js/models/status-bar-bottle.class.js"></script> 
+        <script src="/js/models/coin.class.js"></script> 
+        <script src="/js/models/bottle.class.js"></script> 
+        <script src="/js/models/world.class.js"></script> 
+        <script src="/js/models/background-object.class.js"></script> 
+        <script src="/js/models/keyboard.class.js"></script> 
+        <script src="/js/models/level.class.js"></script>
+        <script src="/js/models/throwable-object.class.js"></script>
+         
+        <script src="/js/levels/level1.js"></script>
+
+        <script defer src="/js/game.js"></script> 
+        <script defer src="js/screenManagement.js"></script>
+      </head>
 <body onload="init(); checkScreenSize()">
 <div class="content-size">
     <div class="img-div">
@@ -87,6 +100,10 @@
               </button>
           </div>
       </div>
+      <section id="imprintAndPrivacyPolicySection">
+        <a class="link" href="imprint.html">Imprint</a>
+        <a class="link" href="privacy-policy.html">Privacy policy</a>
+      </section>
     </section>
     <section id="endScreenContainer" class="d-none">
           <div class="start-end-screeen-container">
@@ -100,7 +117,6 @@
               </button>
           </div>
     </section>
-    <!-- <img class="img" src="img/9_intro_outro_screens/start/startscreen_1.png" alt=""> -->
     <section id="canvasBgrContainer">
         <img id="gameOverImg" class="d-none" src="img/9_intro_outro_screens/game_over/game over!.png" alt="">
         <img id="winImg" class="d-none" src="img/9_intro_outro_screens/win/win_1.png" alt="">
@@ -140,34 +156,14 @@
     </section>
     
     <div class="d-none"> <!-- LINKS ZUM EINBETTEN -->
-        <div> Icons made by <a href="https://www.flaticon.com/authors/wahyu-adam" title="Wahyu Adam"> Wahyu Adam </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
-        <div> Icons made by <a href="https://www.flaticon.com/authors/phoenix-group" title="Phoenix Group"> Phoenix Group </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
-        <div> Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
-        <div> Icons made by <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons"> Those Icons </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a></div>
+        <div>
+            Icons made by
+            <a href="https://www.flaticon.com/authors/wahyu-adam" title="Wahyu Adam"> Wahyu Adam </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a>
+            <a href="https://www.flaticon.com/authors/phoenix-group" title="Phoenix Group"> Phoenix Group </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a>
+            <a href="https://www.flaticon.com/authors/freepik" title="Freepik"> Freepik </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a>
+            <a href="https://www.flaticon.com/authors/those-icons" title="Those Icons"> Those Icons </a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com'</a>
+        </div>
     </div>
 </div>
 </body>
 </html>
-
-<!--     stopAll() {
-        this.getAllAudioObjects().forEach(sound => {
-            this.stop(sound); 
-        });
-    }
-
-    muteAll(mute) {
-        this.getAllAudioObjects().forEach(sound => {
-            sound.muted = mute; 
-        });
-    }
-
-    setVolumeForAll(volume) {
-        if (volume >= 0 && volume <= 1) { 
-            this.getAllAudioObjects().forEach(sound => {
-                sound.volume = volume;
-            });
-        } else {
-            console.error('Die Lautstärke muss zwischen 0 und 1 liegen.');
-        }
-    }
- -->

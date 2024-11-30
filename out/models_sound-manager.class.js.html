@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: models/sound-manager.class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: models/sound-manager.class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Manages the sounds in the game.
+ */
+class SoundManager {
+    walking_sound = new Audio('audio/walking.mp3');
+    jump_sound = new Audio('audio/jump.mp3');
+    hurt_sound = new Audio('audio/hurt.mp3');
+    throw_sound = new Audio('audio/throw.mp3');
+    chicken_sound = new Audio('audio/chicken.mp3');
+    glass_sound = new Audio('audio/glass.mp3');
+    dead_sound = new Audio('audio/dead.mp3');
+    game_over_sound = new Audio('audio/game_over.mp3');
+    win_sound = new Audio('audio/win.mp3')
+    snore_sound = new Audio('audio/snore_sound.mp3');
+    small_chicken_sound = new Audio('audio/small_chicken.mp3');
+    boss_chicken_sound = new Audio('audio/boss_chicken.mp3');
+    sleep_sound = new Audio('audio/sleep.mp3');
+    coin_sound = new Audio('audio/coin.mp3');
+    bottle_sound = new Audio('audio/bottle.mp3');
+  
+    /**
+     * Creates a new SoundManager instance and sets all audio objects to not preload.
+     */
+    constructor() {
+      this.getAllAudioObjects().forEach(sound => {
+        sound.preload = 'none';
+      });
+    }
+  
+    /**
+     * Gets all audio objects managed by the SoundManager.
+     *
+     * @returns {Audio[]} An array of all audio objects.
+     */
+    getAllAudioObjects() {
+      return [
+        this.walking_sound,
+        this.jump_sound,
+        this.hurt_sound,
+        this.throw_sound,
+        this.chicken_sound,
+        this.glass_sound,
+        this.dead_sound,
+        this.game_over_sound,
+        this.snore_sound,
+        this.small_chicken_sound,
+        this.win_sound,
+        this.boss_chicken_sound,
+        this.sleep_sound,
+        this.coin_sound,
+        this.bottle_sound
+      ];
+    }
+  
+    /**
+     * Plays the specified sound.
+     *
+     * @param {string} soundName - The name of the sound to play.
+     * @param {number} [volume=1] - The volume of the sound (0-1).
+     */
+    play(soundName, volume = 1) {
+      let sound = this[soundName];
+      if (sound) {
+        sound.volume = Math.min(1, volume + (overallVolume / 10));
+        if (overallVolume > 0) {
+          sound.play();
+        }
+      } else {
+        console.error(`Sound "${soundName}" nicht gefunden.`);
+      }
+    }
+  
+    /**
+     * Pauses the specified sound.
+     *
+     * @param {string} soundName - The name of the sound to pause.
+     */
+    pause(soundName) {
+      let sound = this[soundName];
+      if (sound) {
+        sound.pause();
+      } else {
+        console.error(`Sound "${soundName}" nicht gefunden.`);
+      }
+    }
+  
+    /**
+     * Stops the specified sound.
+     *
+     * @param {string} soundName - The name of the sound to stop.
+     */
+    stop(soundName) {
+      let sound = this[soundName];
+      if (sound) {
+        sound.pause();
+        sound.currentTime = 0;
+      } else {
+        console.error(`Sound "${soundName}" nicht gefunden.`);
+      }
+    }
+  
+    /**
+     * Mutes or unmutes all sounds.
+     *
+     * @param {boolean} mute - Whether to mute or unmute the sounds.
+     */
+    muteAll(mute) {
+      this.getAllAudioObjects().forEach(sound => {
+        sound.muted = mute;
+      });
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Endboss.html">Endboss</a></li><li><a href="Keyboard.html">Keyboard</a></li><li><a href="Level.html">Level</a></li><li><a href="SmallChicken.html">SmallChicken</a></li><li><a href="SoundManager.html">SoundManager</a></li><li><a href="StatusBarBottle.html">StatusBarBottle</a></li><li><a href="StatusBarCoin.html">StatusBarCoin</a></li><li><a href="StatusBarHealth.html">StatusBarHealth</a></li><li><a href="ThrowableObject.html">ThrowableObject</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#changeVolume">changeVolume</a></li><li><a href="global.html#checkScreenSize">checkScreenSize</a></li><li><a href="global.html#clearCanvas">clearCanvas</a></li><li><a href="global.html#closeFullscreen">closeFullscreen</a></li><li><a href="global.html#displayGameOverScreen">displayGameOverScreen</a></li><li><a href="global.html#displayLandscapeMode">displayLandscapeMode</a></li><li><a href="global.html#displayPortraitMode">displayPortraitMode</a></li><li><a href="global.html#displayWinScreen">displayWinScreen</a></li><li><a href="global.html#enterFullscreen">enterFullscreen</a></li><li><a href="global.html#fullscreen">fullscreen</a></li><li><a href="global.html#hideMobileBtns">hideMobileBtns</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initLevel">initLevel</a></li><li><a href="global.html#interval">interval</a></li><li><a href="global.html#keybindsMenu">keybindsMenu</a></li><li><a href="global.html#selectEndScreen">selectEndScreen</a></li><li><a href="global.html#settingsMenu">settingsMenu</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#stopGame">stopGame</a></li><li><a href="global.html#styleAdaptToFullscreen">styleAdaptToFullscreen</a></li><li><a href="global.html#styleAdaptToWindowScreen">styleAdaptToWindowScreen</a></li><li><a href="global.html#toggleElement">toggleElement</a></li><li><a href="global.html#toggleHitboxes">toggleHitboxes</a></li><li><a href="global.html#toggleMenu">toggleMenu</a></li><li><a href="global.html#toggleMuteImg">toggleMuteImg</a></li><li><a href="global.html#toggleStartScreenBtns">toggleStartScreenBtns</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Nov 30 2024 17:11:59 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

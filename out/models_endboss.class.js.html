@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: models/endboss.class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: models/endboss.class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Represents the end boss enemy in the game.
+ */
+class Endboss extends MovableObject {
+    height = 400;
+    width = 250;
+    y = 60;
+    energy = 100;
+    hadFirstContact = false;
+    canAttack = false;
+    isAttacking = false;
+    animationEnded = false;
+  
+    offset = {
+      top: 90,
+      bottom: 0,
+      left: 10,
+      right: 10
+    }
+  
+    IMAGES_ALERT = [
+      'img/4_enemie_boss_chicken/2_alert/G5.png',
+      'img/4_enemie_boss_chicken/2_alert/G6.png',
+      'img/4_enemie_boss_chicken/2_alert/G7.png',
+      'img/4_enemie_boss_chicken/2_alert/G8.png',
+      'img/4_enemie_boss_chicken/2_alert/G9.png',
+      'img/4_enemie_boss_chicken/2_alert/G10.png',
+      'img/4_enemie_boss_chicken/2_alert/G11.png',
+      'img/4_enemie_boss_chicken/2_alert/G12.png'
+    ];
+  
+    IMAGES_WALKING = [
+      'img/4_enemie_boss_chicken/1_walk/G1.png',
+      'img/4_enemie_boss_chicken/1_walk/G2.png',
+      'img/4_enemie_boss_chicken/1_walk/G3.png',
+      'img/4_enemie_boss_chicken/1_walk/G4.png'
+    ];
+  
+    IMAGES_ATTACK = [
+      'img/4_enemie_boss_chicken/3_attack/G13.png',
+      'img/4_enemie_boss_chicken/3_attack/G14.png',
+      'img/4_enemie_boss_chicken/3_attack/G15.png',
+      'img/4_enemie_boss_chicken/3_attack/G16.png',
+      'img/4_enemie_boss_chicken/3_attack/G17.png',
+      'img/4_enemie_boss_chicken/3_attack/G18.png',
+      'img/4_enemie_boss_chicken/3_attack/G19.png',
+      'img/4_enemie_boss_chicken/3_attack/G20.png'
+    ];
+  
+    IMAGES_HURT = [
+      'img/4_enemie_boss_chicken/4_hurt/G21.png',
+      'img/4_enemie_boss_chicken/4_hurt/G22.png',
+      'img/4_enemie_boss_chicken/4_hurt/G23.png'
+    ];
+  
+    IMAGES_DEAD = [
+      'img/4_enemie_boss_chicken/5_dead/G24.png',
+      'img/4_enemie_boss_chicken/5_dead/G25.png',
+      'img/4_enemie_boss_chicken/5_dead/G26.png'
+    ];
+  
+    /**
+     * Sets the world object for the end boss.
+     *
+     * @param {World} world - The world object.
+     */
+    setWorld(world) {
+      this.world = world;
+    }
+  
+    /**
+     * Creates a new end boss instance.
+     *
+     * @param {World} world - The world object.
+     */
+    constructor(world) {
+      super().loadImage(this.IMAGES_WALKING[0]);
+      this.loadImages(this.IMAGES_WALKING);
+      this.loadImages(this.IMAGES_ALERT);
+      this.loadImages(this.IMAGES_ATTACK);
+      this.loadImages(this.IMAGES_HURT);
+      this.loadImages(this.IMAGES_DEAD);
+  
+      this.x = 2400;
+      this.speed = 0.15 + Math.random() * 0.75;
+      this.animate();
+      this.startTime = new Date().getTime();
+      this.world = world;
+    }
+  
+    /**
+     * Animates the end boss, handling movement, attacks, and animation.
+     */
+    animate() {
+      let i = 0;
+  
+      this.walkIntervalId = interval(() => {
+        this.moveLeft();
+        if (this.isDead()) {
+          this.speed = 0;
+        }
+      }, 1000 / 60);
+  
+      this.animationIntervalId = interval(() => {
+        i++;
+        if (!this.isDead() &amp;&amp; !this.world.character.isDead() &amp;&amp; this.x &lt; 0 &amp;&amp; !gameEnd) {
+          this.world.soundManager.play('boss_chicken_sound', 0.02);
+        } else if (gameEnd) {
+          this.world.soundManager.stop('boss_chicken_sound');
+        }
+        if (this.isDead()) {
+          this.handleDeath();
+        } else if (i &lt; 10) {
+          this.playAnimation(this.IMAGES_ALERT);
+          this.speed = 0;
+        } else if (this.isHurt()) {
+          this.speed = 0.1;
+          this.playAnimation(this.IMAGES_HURT);
+        } else if (this.isAttacking) {
+          this.handleIsAttacking();
+        } else if (this.canAttack) {
+          this.handleCanAttack();
+        } else {
+          this.speed = 0.2;
+          this.playAnimation(this.IMAGES_WALKING);
+        }
+        if (world.character.x > 1500 &amp;&amp; !this.hadFirstContact) {
+          i = 0;
+          this.hadFirstContact = true;
+        }
+      }, 220);
+  
+      this.attackIntervalId = interval(() => {
+        this.checkAtackRangeCollisons();
+      }, 220);
+    }
+  
+    /**
+     * Handles the end boss's death animation and behavior.
+     */
+    handleDeath() {
+      hideMobileBtns();
+      this.playAnimation(this.IMAGES_DEAD);
+      this.fallDown();
+      if (!this.animationEnded) {
+        setTimeout(() => {
+          this.world.soundManager.play('win_sound', 0.2);
+          stopGame();
+          selectEndScreen('endbossDead');
+        }, 3000);
+        this.animationEnded = true;
+      }
+    }
+  
+    /**
+     * Handles the end boss's attack animation and behavior while attacking.
+     */
+    handleIsAttacking() {
+      this.playAnimation(this.IMAGES_ATTACK);
+      this.y = 30;
+      this.speed = 3;
+      setTimeout(() => {
+        this.y = 60;
+        this.speed = 0.2;
+      }, this.IMAGES_ATTACK.length * 220);
+    }
+  
+    /**
+     * Handles the end boss's attack animation and behavior when able to attack.
+     */
+    handleCanAttack() {
+      this.isAttacking = true;
+      this.canAttack = false;
+      this.playAnimation(this.IMAGES_ATTACK);
+      setTimeout(() => {
+        this.y = 60;
+        this.speed = 0.2;
+        this.isAttacking = false;
+      }, this.IMAGES_ATTACK.length * 220);
+    }
+  
+    /**
+     * Handles the end boss's attack cooldown.
+     */
+    attackCooldown() {
+      let currentTime = new Date().getTime();
+      let timePassed = (currentTime - this.startTime) / 1000;
+  
+      if (timePassed > 5) {
+        this.canAttack = true;
+        this.startTime = currentTime;
+      }
+    }
+  
+    /**
+     * Checks if the character is within attack range and triggers the attack cooldown if true.
+     */
+    checkAtackRangeCollisons() {
+      if (this.world.character.isInRange(this)) {
+        this.attackCooldown();
+      }
+    }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Endboss.html">Endboss</a></li><li><a href="Keyboard.html">Keyboard</a></li><li><a href="Level.html">Level</a></li><li><a href="SmallChicken.html">SmallChicken</a></li><li><a href="SoundManager.html">SoundManager</a></li><li><a href="StatusBarBottle.html">StatusBarBottle</a></li><li><a href="StatusBarCoin.html">StatusBarCoin</a></li><li><a href="StatusBarHealth.html">StatusBarHealth</a></li><li><a href="ThrowableObject.html">ThrowableObject</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#changeVolume">changeVolume</a></li><li><a href="global.html#checkScreenSize">checkScreenSize</a></li><li><a href="global.html#clearCanvas">clearCanvas</a></li><li><a href="global.html#closeFullscreen">closeFullscreen</a></li><li><a href="global.html#displayGameOverScreen">displayGameOverScreen</a></li><li><a href="global.html#displayLandscapeMode">displayLandscapeMode</a></li><li><a href="global.html#displayPortraitMode">displayPortraitMode</a></li><li><a href="global.html#displayWinScreen">displayWinScreen</a></li><li><a href="global.html#enterFullscreen">enterFullscreen</a></li><li><a href="global.html#fullscreen">fullscreen</a></li><li><a href="global.html#hideMobileBtns">hideMobileBtns</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initLevel">initLevel</a></li><li><a href="global.html#interval">interval</a></li><li><a href="global.html#keybindsMenu">keybindsMenu</a></li><li><a href="global.html#selectEndScreen">selectEndScreen</a></li><li><a href="global.html#settingsMenu">settingsMenu</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#stopGame">stopGame</a></li><li><a href="global.html#styleAdaptToFullscreen">styleAdaptToFullscreen</a></li><li><a href="global.html#styleAdaptToWindowScreen">styleAdaptToWindowScreen</a></li><li><a href="global.html#toggleElement">toggleElement</a></li><li><a href="global.html#toggleHitboxes">toggleHitboxes</a></li><li><a href="global.html#toggleMenu">toggleMenu</a></li><li><a href="global.html#toggleMuteImg">toggleMuteImg</a></li><li><a href="global.html#toggleStartScreenBtns">toggleStartScreenBtns</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Nov 30 2024 17:11:59 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

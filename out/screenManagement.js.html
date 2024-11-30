@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: screenManagement.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: screenManagement.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Checks the screen size and orientation and displays the appropriate layout.
+ */
+function checkScreenSize() {
+  let portraitMessage = document.getElementById('portraitMessage');
+  let startBtnContainer = document.getElementById('startBtnContainer');
+  let keybindsBtn = document.getElementById('keybindsBtn');
+  let settingsBtnContainer = document.getElementById('settingsBtnContainer');
+
+  if (window.innerWidth &lt;= 770 &amp;&amp;
+    (typeof window.orientation === 'undefined' ||
+      window.orientation === 0 || window.orientation === 180)) {
+    displayPortraitMode(portraitMessage, startBtnContainer, keybindsBtn, settingsBtnContainer);
+  } else {
+    displayLandscapeMode(portraitMessage, startBtnContainer, keybindsBtn, settingsBtnContainer);
+  }
+}
+
+window.addEventListener('load', checkScreenSize);
+window.addEventListener("resize", checkScreenSize);
+window.addEventListener('orientationchange', checkScreenSize);
+checkScreenSize();
+
+/**
+ * Displays the portrait mode layout.
+ *
+ * @param {HTMLElement} portraitMessage - The element displaying the portrait message.
+ * @param {HTMLElement} startBtnContainer - The container for the start button.
+ * @param {HTMLElement} keybindsBtn - The keybinds button element.
+ * @param {HTMLElement} settingsBtnContainer - The container for the settings button.
+ */
+function displayPortraitMode(portraitMessage, startBtnContainer, keybindsBtn, settingsBtnContainer) {
+  portraitMessage.classList.remove('d-none');
+  startBtnContainer.style.opacity = '0.5';
+  keybindsBtn.style.opacity = '0.5';
+  settingsBtnContainer.style.opacity = '0.5';
+}
+
+/**
+ * Displays the landscape mode layout.
+ *
+ * @param {HTMLElement} portraitMessage - The element displaying the portrait message.
+ * @param {HTMLElement} startBtnContainer - The container for the start button.
+ * @param {HTMLElement} keybindsBtn - The keybinds button element.
+ * @param {HTMLElement} settingsBtnContainer - The container for the settings button.
+ */
+function displayLandscapeMode(portraitMessage, startBtnContainer, keybindsBtn, settingsBtnContainer) {
+  startBtnContainer.style.opacity = '1';
+  keybindsBtn.style.opacity = '1';
+  settingsBtnContainer.style.opacity = '1';
+  portraitMessage.classList.add('d-none');
+}
+
+/**
+ * Toggles fullscreen mode for the canvas.
+ */
+function fullscreen() {
+  let fullscreen = document.getElementById('canvasBgrContainer');
+  let fullscreenIcon = document.getElementById('fullscreenIcon');
+  if (fullscreen.classList.contains('canvas-fullscreen')) {
+    closeFullscreen();
+    styleAdaptToWindowScreen(fullscreenIcon);
+  } else {
+    enterFullscreen(fullscreen);
+    styleAdaptToFullscreen(fullscreen, fullscreenIcon);
+  }
+}
+
+/**
+ * Adapts the styling of the canvas and fullscreen icon for fullscreen mode.
+ *
+ * @param {HTMLElement} fullscreen - The fullscreen element.
+ * @param {HTMLElement} fullscreenIcon - The fullscreen icon element.
+ */
+function styleAdaptToFullscreen(fullscreen, fullscreenIcon) {
+  document.getElementById('canvas').classList.add('canvas-fullscreen');
+  fullscreen.classList.add('canvas-fullscreen');
+  fullscreenIcon.src = 'img/icons/compress.svg';
+  fullscreenIcon.classList.add('compress-screen-icon');
+}
+
+/**
+ * Adapts the styling of the fullscreen icon for windowed mode.
+ *
+ * @param {HTMLElement} fullscreenIcon - The fullscreen icon element.
+ */
+function styleAdaptToWindowScreen(fullscreenIcon) {
+  fullscreenIcon.src = 'img/icons/expand.svg';
+  fullscreenIcon.classList.remove('compress-screen-icon');
+}
+
+/**
+ * Enters fullscreen mode for the given element.
+ *
+ * @param {HTMLElement} element - The element to enter fullscreen mode for.
+ */
+function enterFullscreen(element) {
+  if (!isInFullscreen) {
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen();
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen();
+    }
+    isInFullscreen = true;
+  }
+}
+
+/**
+ * Exits fullscreen mode.
+ */
+function closeFullscreen() {
+  if (isInFullscreen) {
+    document.getElementById('canvas').classList.remove('canvas-fullscreen');
+    document.getElementById('canvasBgrContainer').classList.remove('canvas-fullscreen');
+    document.getElementById('fullscreenIcon').src = 'img/icons/expand.svg';
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    }
+    isInFullscreen = false;
+  }
+}
+
+/**
+ * Toggles the visibility of an element.
+ *
+ * @param {string} elementId - The ID of the element to toggle.
+ * @param {boolean} show - Whether to show or hide the element.
+ */
+function toggleElement(elementId, show) {
+  let element = document.getElementById(elementId);
+  if (show) {
+    element.classList.remove('d-none');
+  } else {
+    element.classList.add('d-none');
+  }
+}
+
+/**
+ * Toggles the keybinds menu.
+ */
+function keybindsMenu() {
+  toggleMenu(
+    'keybindsBtnContainer',
+    'keybindsBtn',
+    'keybindsExplanationContainer',
+    'openKeybinds', { backgroundColor: 'transparent', filter: 'none', borderColor: 'transparent' },
+    { backgroundColor: 'rgb(248,199,105)', filter: 'drop-shadow(0px 0px 3px black)', borderColor: 'white' }
+  );
+}
+
+/**
+ * Toggles the settings menu.
+ */
+function settingsMenu() {
+  toggleMenu(
+    'settingsBtnContainer',
+    'settingsBtn',
+    'changeSettingsContainer',
+    'openSettings', { backgroundColor: 'transparent', filter: 'none', borderColor: 'transparent' },
+    { backgroundColor: 'rgb(199,103,88)', filter: 'drop-shadow(0px 0px 3px black)', borderColor: 'white' }
+  );
+}
+
+/**
+ * Toggles the visibility of a menu.
+ *
+ * @param {string} containerId - The ID of the menu container.
+ * @param {string} btnId - The ID of the menu button.
+ * @param {string} contentId - The ID of the menu content.
+ * @param {string} openClass - The class to add to the container when the menu is open.
+ * @param {object} activeStyles - The styles to apply to the button when the menu is open.
+ * @param {object} inactiveStyles - The styles to apply to the button when the menu is closed.
+ */
+function toggleMenu(containerId, btnId, contentId, openClass, activeStyles, inactiveStyles) {
+  let container = document.getElementById(containerId);
+  let btn = document.getElementById(btnId);
+  let content = document.getElementById(contentId);
+
+  if (!container.classList.contains(openClass)) {
+    container.classList.add(openClass);
+    Object.assign(btn.style, activeStyles);
+    setTimeout(() => content.classList.remove('d-none'), 175);
+  } else {
+    container.classList.remove(openClass);
+    Object.assign(btn.style, inactiveStyles);
+    content.classList.add('d-none');
+  }
+}
+
+/**
+ * Hides the mobile control buttons temporarily.
+ */
+function hideMobileBtns() {
+  let elements = document.querySelectorAll('.mobile-control-btn-img');
+
+  elements.forEach(element => {
+    element.classList.add('d-none');
+  });
+
+  setTimeout(() => {
+    elements.forEach(element => {
+      element.classList.remove('d-none');
+    });
+  }, 6000);
+}
+
+/**
+ * Toggles the mute image for mobile devices.
+ */
+function toggleMuteImg() {
+  let mobileMuteImg = document.getElementById('mobileMuteImg');
+  if (world.isMuted) {
+    mobileMuteImg.src = 'img/icons/mute.png';
+  } else {
+    mobileMuteImg.src = 'img/icons/volume.png';
+  }
+}
+
+/**
+ * Toggles the visibility of start screen buttons.
+ *
+ * @param {string} containerId1 - The ID of the first button container.
+ * @param {string} containerId2 - The ID of the second button container.
+ */
+function toggleStartScreenBtns(containerId1, containerId2) {
+  startScreenBtns = !startScreenBtns;
+  [containerId1, containerId2].forEach(containerId => {
+    toggleElement(containerId, startScreenBtns);
+  });
+}
+
+/**
+ * Toggles the display of hitboxes.
+ */
+function toggleHitboxes() {
+  hitboxes = !hitboxes;
+
+  let switchImg = document.getElementById('switchImg');
+  if (hitboxes) {
+    switchImg.src = 'img/icons/on.png';
+  } else {
+    switchImg.src = 'img/icons/off.png';
+  }
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Endboss.html">Endboss</a></li><li><a href="Keyboard.html">Keyboard</a></li><li><a href="Level.html">Level</a></li><li><a href="SmallChicken.html">SmallChicken</a></li><li><a href="SoundManager.html">SoundManager</a></li><li><a href="StatusBarBottle.html">StatusBarBottle</a></li><li><a href="StatusBarCoin.html">StatusBarCoin</a></li><li><a href="StatusBarHealth.html">StatusBarHealth</a></li><li><a href="ThrowableObject.html">ThrowableObject</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#changeVolume">changeVolume</a></li><li><a href="global.html#checkScreenSize">checkScreenSize</a></li><li><a href="global.html#clearCanvas">clearCanvas</a></li><li><a href="global.html#closeFullscreen">closeFullscreen</a></li><li><a href="global.html#displayGameOverScreen">displayGameOverScreen</a></li><li><a href="global.html#displayLandscapeMode">displayLandscapeMode</a></li><li><a href="global.html#displayPortraitMode">displayPortraitMode</a></li><li><a href="global.html#displayWinScreen">displayWinScreen</a></li><li><a href="global.html#enterFullscreen">enterFullscreen</a></li><li><a href="global.html#fullscreen">fullscreen</a></li><li><a href="global.html#hideMobileBtns">hideMobileBtns</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initLevel">initLevel</a></li><li><a href="global.html#interval">interval</a></li><li><a href="global.html#keybindsMenu">keybindsMenu</a></li><li><a href="global.html#selectEndScreen">selectEndScreen</a></li><li><a href="global.html#settingsMenu">settingsMenu</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#stopGame">stopGame</a></li><li><a href="global.html#styleAdaptToFullscreen">styleAdaptToFullscreen</a></li><li><a href="global.html#styleAdaptToWindowScreen">styleAdaptToWindowScreen</a></li><li><a href="global.html#toggleElement">toggleElement</a></li><li><a href="global.html#toggleHitboxes">toggleHitboxes</a></li><li><a href="global.html#toggleMenu">toggleMenu</a></li><li><a href="global.html#toggleMuteImg">toggleMuteImg</a></li><li><a href="global.html#toggleStartScreenBtns">toggleStartScreenBtns</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Nov 30 2024 17:11:59 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: game.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: game.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let intervalIds = [];
+let canvas;
+let world;
+let keyboard = new Keyboard();
+let gameEnd;
+let isInFullscreen;
+let hitboxes = false;
+let startScreenBtns = true;
+let overallVolume;
+
+/**
+ * Initializes the game by setting up the canvas and mobile mute button.
+ */
+function init() {
+  canvas = document.getElementById('canvas');
+  let mobileMuteBtn = document.getElementById('mobileMuteBtn');
+  mobileMuteBtn.addEventListener('touchstart', () => {
+    world.toggleMute();
+    toggleMuteImg();
+  });
+  changeVolume();
+}
+
+/**
+ * Starts the game by initializing the game world and setting up the game environment.
+ */
+function startGame() {
+  gameEnd = false;
+  isInFullscreen = false;
+  toggleElement('portraitMessage', false);
+  toggleElement('fullscreenIcon', true);
+  toggleElement('startScreenContainer', false);
+  toggleElement('endScreenContainer', false);
+  toggleElement('canvas', true);
+  clearCanvas();
+  initLevel();
+  world = new World(canvas, keyboard);
+}
+
+/**
+ * Clears the canvas.
+ */
+function clearCanvas() {
+  let ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+/**
+ * Sets an interval timer and stores its ID.
+ *
+ * @param {function} fn - The function to execute at each interval.
+ * @param {number} time - The interval time in milliseconds.
+ * @returns {number} The interval ID.
+ */
+function interval(fn, time) {
+  let id = setInterval(fn, time);
+  intervalIds.push(id)
+  return id;
+}
+
+/**
+ * Stops the game by clearing all intervals.
+ */
+function stopGame() {
+  intervalIds.forEach(clearInterval);
+  intervalIds = [];
+}
+
+/**
+ * Selects the appropriate end screen based on how the game ended.
+ *
+ * @param {string} gameEndThrough - The reason for the game ending ('endbossDead' or 'zeroHp').
+ */
+function selectEndScreen(gameEndThrough) {
+  gameEnd = true;
+  toggleElement('fullscreenIcon', false);
+  closeFullscreen();
+  if (gameEndThrough === 'endbossDead') {
+    displayWinScreen();
+  } else if (gameEndThrough === 'zeroHp') {
+    displayGameOverScreen();
+  }
+}
+
+/**
+ * Displays the win screen.
+ */
+function displayWinScreen() {
+  toggleElement('winImg', true);
+  clearCanvas();
+  toggleElement('canvas', false);
+  setTimeout(() => {
+    toggleElement('winImg', false);
+    toggleElement('endScreenContainer', true);
+    toggleElement('introBgr', true);
+    toggleElement('ingameBgr', false);
+    clearCanvas();
+  }, 3000);
+}
+
+/**
+ * Displays the game over screen.
+ */
+function displayGameOverScreen() {
+  toggleElement('gameOverImg', true);
+  toggleElement('canvas', false);
+  setTimeout(() => {
+    toggleElement('gameOverImg', false);
+    toggleElement('endScreenContainer', true);
+    toggleElement('introBgr', true);
+    toggleElement('ingameBgr', false);
+    clearCanvas();
+  }, 3000);
+}
+
+/**
+ * Changes the overall volume of the game.
+ *
+ * @param {string} [change] - Optional parameter indicating whether to increase ('plus') or decrease ('minus') the volume.
+ */
+function changeVolume(change) {
+  let volumeCounter = document.getElementById('volumeCounter');
+
+  if (change == 'plus') {
+    overallVolume = overallVolume + 1;
+    if (overallVolume > 10) {
+      overallVolume = 10;
+    }
+  } else if (change == 'minus') {
+    overallVolume = overallVolume - 1;
+    if (overallVolume &lt; 0) {
+      overallVolume = 0;
+    }
+  } else {
+    overallVolume = 5;
+  }
+  volumeCounter.innerHTML = overallVolume;
+}
+
+document.addEventListener('keydown', (e) => {
+  if (e.keyCode == 39) {
+    keyboard.RIGHT = true;
+  };
+
+  if (e.keyCode == 37) {
+    keyboard.LEFT = true;
+  }
+
+  if (e.keyCode == 40) {
+    keyboard.DOWN = true;
+  }
+
+  if (e.keyCode == 38) {
+    keyboard.UP = true;
+  }
+
+  if (e.keyCode == 32) {
+    keyboard.SPACE = true;
+  }
+
+  if (e.keyCode == 68) {
+    keyboard.D = true;
+  }
+});
+
+document.addEventListener('keyup', (e) => {
+  if (e.keyCode == 39) {
+    keyboard.RIGHT = false;
+  };
+
+  if (e.keyCode == 37) {
+    keyboard.LEFT = false;
+  }
+
+  if (e.keyCode == 40) {
+    keyboard.DOWN = false;
+  }
+
+  if (e.keyCode == 38) {
+    keyboard.UP = false;
+  }
+
+  if (e.keyCode == 32) {
+    keyboard.SPACE = false;
+  }
+
+  if (e.keyCode == 68) {
+    keyboard.D = false;
+  }
+});
+
+const buttonMap = {
+  'moveLeftBtn': 'LEFT',
+  'moveRightBtn': 'RIGHT',
+  'mobileJumpBtn': 'SPACE',
+  'mobileThrowBtn': 'D'
+};
+
+for (const buttonId in buttonMap) {
+  let element = document.getElementById(buttonId);
+  let key = buttonMap[buttonId];
+
+  element.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard[key] = true;
+  }, { passive: false });
+
+  element.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard[key] = false;
+  }, { passive: false });
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coin.html">Coin</a></li><li><a href="Endboss.html">Endboss</a></li><li><a href="Keyboard.html">Keyboard</a></li><li><a href="Level.html">Level</a></li><li><a href="SmallChicken.html">SmallChicken</a></li><li><a href="SoundManager.html">SoundManager</a></li><li><a href="StatusBarBottle.html">StatusBarBottle</a></li><li><a href="StatusBarCoin.html">StatusBarCoin</a></li><li><a href="StatusBarHealth.html">StatusBarHealth</a></li><li><a href="ThrowableObject.html">ThrowableObject</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#changeVolume">changeVolume</a></li><li><a href="global.html#checkScreenSize">checkScreenSize</a></li><li><a href="global.html#clearCanvas">clearCanvas</a></li><li><a href="global.html#closeFullscreen">closeFullscreen</a></li><li><a href="global.html#displayGameOverScreen">displayGameOverScreen</a></li><li><a href="global.html#displayLandscapeMode">displayLandscapeMode</a></li><li><a href="global.html#displayPortraitMode">displayPortraitMode</a></li><li><a href="global.html#displayWinScreen">displayWinScreen</a></li><li><a href="global.html#enterFullscreen">enterFullscreen</a></li><li><a href="global.html#fullscreen">fullscreen</a></li><li><a href="global.html#hideMobileBtns">hideMobileBtns</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initLevel">initLevel</a></li><li><a href="global.html#interval">interval</a></li><li><a href="global.html#keybindsMenu">keybindsMenu</a></li><li><a href="global.html#selectEndScreen">selectEndScreen</a></li><li><a href="global.html#settingsMenu">settingsMenu</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#stopGame">stopGame</a></li><li><a href="global.html#styleAdaptToFullscreen">styleAdaptToFullscreen</a></li><li><a href="global.html#styleAdaptToWindowScreen">styleAdaptToWindowScreen</a></li><li><a href="global.html#toggleElement">toggleElement</a></li><li><a href="global.html#toggleHitboxes">toggleHitboxes</a></li><li><a href="global.html#toggleMenu">toggleMenu</a></li><li><a href="global.html#toggleMuteImg">toggleMuteImg</a></li><li><a href="global.html#toggleStartScreenBtns">toggleStartScreenBtns</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Sat Nov 30 2024 17:11:59 GMT+0100 (Mitteleuropäische Normalzeit)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

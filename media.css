@@ -31,7 +31,7 @@
     animation: pulse 2s infinite;
     display: block;
     position: fixed;
-    top: 60%;
+    top: 100px;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
